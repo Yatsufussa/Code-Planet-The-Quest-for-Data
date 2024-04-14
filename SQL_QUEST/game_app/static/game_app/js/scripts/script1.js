@@ -1,74 +1,57 @@
 document.getElementById("submit-query").addEventListener("click", function() {
     var sqlQuery = document.getElementById("sql-query").value.trim(); // Trim to remove leading and trailing whitespace
 
-    // Validate SQL query
-    if (sqlQuery === "") {
-        showAlert("Please enter a valid SQL query."); // Show alert if SQL query is empty
-        return; // Exit function if SQL query is empty
+    // Check for specific SQL queries and display custom alert messages
+    if (sqlQuery.toLowerCase().includes("delete")) {
+        showAlert("Are you sure you want to delete data?"); // Alert message for delete query
+        return;
+    } else if (sqlQuery.toLowerCase().includes("update")) {
+        showAlert("Are you sure you want to update data?"); // Alert message for update query
+        return;
+    } else if (sqlQuery.toLowerCase().includes("insert")) {
+        showAlert("Are you sure you want to insert data?"); // Alert message for insert query
+        return;
+    } else if (sqlQuery.toLowerCase().includes("drop")) {
+        showAlert("Are you sure you want to drop a table?"); // Alert message for drop query
+        return;
     }
 
-    console.log("SQL Query:", sqlQuery); // Log the SQL query value
+    // Modify SQL query to add prefix after "FROM"
+    sqlQuery = addPrefixAfterFrom(sqlQuery, 'game_app');
 
-    // Normalize the SQL query and correct answer for comparison
-    var normalizedSqlQuery = normalizeSqlQuery(sqlQuery);
-    var normalizedCorrectQuery = normalizeSqlQuery("SELECT virus_name FROM game_app_datafield WHERE virus_name='ILOVEYOU';");
+    // Render the table based on the entered query
+    renderTable(sqlQuery);
 
-    // Check for specific SQL queries and display custom alert messages
-    if (normalizedSqlQuery.includes("delete")) {
-        showAlert("Are you sure you want to delete data?"); // Alert message for delete query
-    } else if (normalizedSqlQuery.includes("update")) {
-        showAlert("Are you sure you want to update data?"); // Alert message for update query
-    } else if (normalizedSqlQuery.includes("insert")) {
-        showAlert("Are you sure you want to insert data?"); // Alert message for insert query
-    } else if (normalizedSqlQuery.includes("drop")) {
-        showAlert("Are you sure you want to drop data?"); // Alert message for insert query
+    // Expected correct query for passing the level
+    var correctQuery = "SELECT virus_name FROM game_app_datafield WHERE virus_name='ILOVEYOU';";
+
+    // Check if the user's query matches the correct query
+    if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
+        // Show success alert with green color
+        showSuccessAlert("Congratulations! You passed the level.");
+
+        // Open new window on alert close
+        openNewWindow();
     } else {
-        // Send the SQL query to the server and retrieve the result
-        executeQuery(sqlQuery, function(queryResult) {
-            // Render the result in the dynamic table
-            renderDynamicTable(queryResult);
-
-            // Check if the SQL query matches the correct answer exactly
-            if (normalizedSqlQuery === normalizedCorrectQuery) {
-                showAlert("Correct!"); // Alert message for correct query
-                // Redirect to the next HTML page after 3 seconds
-                setTimeout(function() {
-                    window.location.href = "/start_game/level_2/"; // Change the URL as needed
-                }, 3000);
-            } else {
-                showAlert("Incorrect, try again."); // Alert message for incorrect query
-            }
-        });
+        showAlert("Not correct, try again..."); // Show alert if query does not match
     }
 });
 
-
-
-function normalizeSqlQuery(sqlQuery) {
-    // Trim leading and trailing whitespace
-    var normalizedQuery = sqlQuery.trim();
-    // Replace single quotes with double quotes
-    normalizedQuery = normalizedQuery.replace(/'/g, '"');
-    // Remove excess spaces around equals sign
-    normalizedQuery = normalizedQuery.replace(/\s*=\s*/g, '=');
-
-    // Check if the query contains the app name as a prefix and remove it
-    normalizedQuery = removeAppPrefix(normalizedQuery);
-
-    return normalizedQuery.toLowerCase(); // Return the normalized query
-}
-
-function removeAppPrefix(query) {
-    // Define your app name here
-    var appName = "game_app";
-
-    // Check if the query starts with the app name followed by a dot and remove it
-    if (query.toLowerCase().startsWith(appName.toLowerCase() + '.')) {
-        return query.substring(appName.length + 1); // Add 1 to also remove the dot
+function addPrefixAfterFrom(sqlQuery, prefix) {
+    // Split the query into parts using space as delimiter
+    var parts = sqlQuery.split(/\b\s+/);
+    // Find the index of "FROM" keyword
+    var fromIndex = parts.findIndex(function(part) {
+        return part.toLowerCase() === "from";
+    });
+    // Insert the prefix after "FROM"
+    if (fromIndex !== -1 && fromIndex < parts.length - 1) {
+        // Add prefix directly connected to the next word after "FROM"
+        parts[fromIndex + 1] = prefix + parts[fromIndex + 1];
     }
-    return query;
+    // Join the parts back to form the modified query
+    return parts.join(" ");
 }
-
 
 
 
@@ -114,6 +97,20 @@ function openNewWindow() {
     // Open a new window or tab after successful execution
     var newWindow = window.open("level_2.html", "_blank");
     // You can customize the URL and window properties as needed.
+}
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
 
 function executeQuery(sqlQuery, callback) {

@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,15 +66,8 @@
     </div>
     <h2 class="ritual-heading">Write Your Dark Ritual</h2>
 
-    <!-- Background Music -->
-    <audio autoplay loop>
-        <source src="path_to_your_audio_file.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <!-- Link to external JavaScript file -->
+    <!-- Link to external JavaScript files -->
     <script src="{% static 'game_app/js/dialogues/dialogue1.js' %}"></script>
     <script src="{% static 'game_app/js/scripts/script1.js' %}"></script>
-    <script src="script.js"></script>
 </body>
 </html>
