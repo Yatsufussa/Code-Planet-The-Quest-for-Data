@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu - Elden Ring</title>
+    <link rel="stylesheet" href="{% static 'game_app/css/styles.css'%}">
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <h1>Main Menu</h1>
+        <div class="buttons">
+            <a href="{% url 'level1' %}" class="button">Start New Game</a>
+            <a href="{% url 'settings' %}" class="button">Settings</a>
+            <a href="{% url 'about_us' %}" class="button">About Us</a>
+            <a href="{% url 'leaders_sheet' %}" class="button">Leaderboards</a>
+        </div>
+    </div>
+</body>
+</html>

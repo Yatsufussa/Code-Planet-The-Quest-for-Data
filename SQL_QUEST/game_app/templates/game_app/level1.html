@@ -1,0 +1,80 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Game</title>
+    <link rel="stylesheet" href="{% static 'game_app/css/level_1.css' %}">
+</head>
+<body class="souls-like">
+    <div class="button-container">
+         <button id="back-button" class="custom-button back-button">Back</button>
+         <button id="next-button" class="custom-button next-button">Next</button>
+    </div>
+
+    <div class="container">
+        <div class="big-box background-image">
+            <!-- Your background image content -->
+            <div class="additional-image"></div>
+            <div class="additional-image2"></div>
+        </div>
+        <div class="overlay">
+            <div id="overlay-content">
+                <!-- Text content will be dynamically updated here -->
+                Example talk
+            </div>
+        </div>
+        <div class="content">
+            <!-- Heading for the current table -->
+                <h2 class="table-heading">DATAFIELDS</h2>
+            <div class="small-box sql-table" id="current-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Names_Of_The_Hacked</th>
+                            <th>Virus_Name</th>
+                            <th>Code_Of_Data</th>
+                            <th>Hacking_Time</th>
+                            <!-- Add more table headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for datafield in datafields %}
+                            <tr>
+                                <td>{{ datafield.names_of_the_hacked }}</td>
+                                <td>{{ datafield.virus_name }}</td>
+                                <td>{{ datafield.code_of_data }}</td>
+                                <td>{{ datafield.hacking_time }}</td>
+                                <!-- Render other fields as needed -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- Dynamic table for results -->
+            <h2 class="table-heading">Your Result</h2>
+            <div class="small-box sql-table" id="dynamic-table">
+                <!-- Dynamic table content will be inserted here -->
+            </div>
+        </div>
+    </div>
+    <!-- SQL Entry -->
+    <div class="sql-entry">
+        <textarea id="sql-query" rows="5" cols="50"></textarea>
+        <button id="submit-query">Invoke</button>
+    </div>
+    <h2 class="ritual-heading">Write Your Dark Ritual</h2>
+
+    <!-- Background Music -->
+    <audio autoplay loop>
+        <source src="path_to_your_audio_file.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Link to external JavaScript file -->
+    <script src="{% static 'game_app/js/dialogues/dialogue1.js' %}"></script>
+    <script src="{% static 'game_app/js/scripts/script1.js' %}"></script>
+    <script src="script.js"></script>
+</body>
+</html>
