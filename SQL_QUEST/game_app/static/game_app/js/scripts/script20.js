@@ -44,7 +44,6 @@ document.getElementById("submit-query").addEventListener("click", function() {
         showAlert("Not correct, try again..."); // Show alert if query does not match
     }
 });
-
 function addPrefixAfterFrom(sqlQuery, prefix) {
     // Use regular expression to find "FROM" followed by one or more spaces, then add the prefix
     return sqlQuery.replace(/FROM\s+/i, "FROM " + prefix);
@@ -102,6 +101,7 @@ function showAlertSuccess(message) {
         document.body.removeChild(alertElement);
     }, 3000); // Adjust time as needed
 }
+
 
 
 function getCookie(name) {

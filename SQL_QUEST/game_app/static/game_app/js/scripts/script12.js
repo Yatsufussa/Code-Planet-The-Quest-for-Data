@@ -38,7 +38,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
 
         // Redirect to the next page after 3 seconds
         setTimeout(function() {
-            window.location.href = "/level2/";
+            window.location.href = "/level13/";
         }, 3000);
     } else {
         showAlert("Not correct, try again..."); // Show alert if query does not match
@@ -73,6 +73,7 @@ function renderTable(sqlQuery) {
         renderDynamicTable(queryResult);
     });
 }
+
 function showAlert(message) {
     // Create alert element
     var alertElement = document.createElement("div");
@@ -102,6 +103,7 @@ function showAlertSuccess(message) {
         document.body.removeChild(alertElement);
     }, 3000); // Adjust time as needed
 }
+
 
 
 function getCookie(name) {

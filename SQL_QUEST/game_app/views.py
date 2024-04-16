@@ -8,16 +8,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 
 
-
 def home(request):
     return render(request, 'game_app/main_menu.html')
-
-
-def level1(request):
-    # Fetch data from the database
-    sql_data = DataField.objects.all()  # Query your database to retrieve data
-    # Pass the data to the template
-    return render(request, 'game_app/level1.html', {'datafields': sql_data})
 
 
 def settings(request):
@@ -62,3 +54,143 @@ def execute_query(request):
     else:
         # Handle invalid requests
         return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+def level1(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level1.html', {'datafields': sql_data})
+
+
+def level2(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level2.html', {'datafields': sql_data})
+
+
+def level3(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level3.html', {'datafields': sql_data})
+
+
+def level4(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level4.html', {'datafields': sql_data})
+
+
+def level5(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level5.html', {'datafields': sql_data})
+
+
+def level6(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level6.html', {'datafields': sql_data})
+
+
+def level7(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level7.html', {'datafields': sql_data})
+
+
+def level8(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level8.html', {'datafields': sql_data})
+
+
+def level9(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level9.html', {'datafields': sql_data})
+
+
+def level10(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level10.html', {'datafields': sql_data})
+
+
+def level11(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level11.html', {'datafields': sql_data})
+
+
+def level12(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level12.html', {'datafields': sql_data})
+
+
+def level13(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level13.html', {'datafields': sql_data})
+
+
+def level14(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level14.html', {'datafields': sql_data})
+
+
+def level15(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level15.html', {'datafields': sql_data})
+
+
+def level16(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level16.html', {'datafields': sql_data})
+
+
+def level17(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level17.html', {'datafields': sql_data})
+
+
+def level18(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level18.html', {'datafields': sql_data})
+
+
+def level19(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level19.html', {'datafields': sql_data})
+
+
+def level20(request):
+    # Fetch data from the database
+    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    # Pass the data to the template
+    return render(request, 'game_app/level20.html', {'datafields': sql_data})

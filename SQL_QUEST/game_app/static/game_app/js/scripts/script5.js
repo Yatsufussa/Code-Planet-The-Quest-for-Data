@@ -38,7 +38,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
 
         // Redirect to the next page after 3 seconds
         setTimeout(function() {
-            window.location.href = "/level2/";
+            window.location.href = "/level6/";
         }, 3000);
     } else {
         showAlert("Not correct, try again..."); // Show alert if query does not match
