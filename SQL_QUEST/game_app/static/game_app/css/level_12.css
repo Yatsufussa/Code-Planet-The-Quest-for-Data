@@ -246,6 +246,19 @@
     text-align: center;
 }
 
+.additional-image2 {
+    /* Positioning */
+    position: absolute;
+    top: 400px; /* Adjust as needed */
+    left: 800px; /* Adjust as needed */
+    /* Other styles as needed */
+    width: 400px;
+    height: 500px;
+    z-index: 1;
+    background-image: url('/static/game_app/images/game-character7.png'); /* Set the background image */
+    background-size: contain; /* Ensure the image covers the entire div */
+    background-repeat: no-repeat;
+}
 
 
 .alert-danger {

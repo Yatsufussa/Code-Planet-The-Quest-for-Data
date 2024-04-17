@@ -1,9 +1,9 @@
 const dialogue = [
+    "Scene: Nick tries to unravel the tangled logs when suddenly he finds traces of the virus.",
     "Nick: These logs are too tangled...",
-    "(Suddenly, Nick finds suspicious entries.)",
+    "Suddenly, Nick finds suspicious entries.",
     "Riddle: To find the virus's trail, consider which actions are most frequently recorded in its logs. One of these actions is the most common and may indicate the method the virus uses to attack data. What action is this?"
 ];
-
 
 // Initialize dialogue index
 let dialogueIndex = 0;
@@ -19,20 +19,20 @@ function updateDialogue() {
     const overlayContent = document.getElementById('overlay-content');
     const currentDialogue = dialogue[dialogueIndex];
     const character = currentDialogue.split(': ')[0];
-    const dialogueText = currentDialogue.split(': ')[1];
+    const dialogueText = currentDialogue.split(': ')[1] || currentDialogue; // Added to handle non-dialogue lines
 
     // Apply CSS class based on character
-    if (character.includes('Nick')) {
+    if (character === "Nick") {
         overlayContent.innerHTML = `<span class="Nick">${character}: </span>`;
-    } else if (character.includes('Archivist')) {
-        overlayContent.innerHTML = `<span class="Archivist">${character}: </span>`;
-    } else if (character.includes('Riddle')) {
-        overlayContent.innerHTML = `<span class="Riddle">${character}: </span>`;
+    } else if (character === "Sam") {
+        overlayContent.innerHTML = `<span class="Sam">${character}: </span>`;
+    } else {
+        overlayContent.innerHTML = `<span>${character}: </span>`; // For non-dialogue lines
     }
 
     // Typing animation
     const textElement = overlayContent.querySelector('span');
-    let currentTextIndex = 0; // Reset currentTextIndex
+    currentTextIndex = 0; // Reset currentTextIndex
     interval = setInterval(function() {
         textElement.textContent += dialogueText[currentTextIndex];
         currentTextIndex++;
@@ -41,7 +41,6 @@ function updateDialogue() {
         }
     }, typingSpeed);
 }
-
 
 // Add event listener to "Next" button
 document.getElementById('next-button').addEventListener('click', function() {

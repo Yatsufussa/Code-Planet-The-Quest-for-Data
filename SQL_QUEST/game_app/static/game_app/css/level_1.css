@@ -46,6 +46,20 @@
     background-size: contain; /* Ensure the image covers the entire div */
     background-repeat: no-repeat;
 }
+.additional-image2 {
+    /* Positioning */
+    position: absolute;
+    top: 445px; /* Adjust as needed */
+    left: 800px; /* Adjust as needed */
+    /* Other styles as needed */
+    width: 350px;
+    height: 450px;
+    z-index: 1;
+    background-image: url('/static/game_app/images/game-character2.png'); /* Set the background image */
+    background-size: contain; /* Ensure the image covers the entire div */
+    background-repeat: no-repeat;
+}
+
 
 .content {
     margin-left: 20px;
@@ -260,7 +274,7 @@
     border-color: #c3e6cb;
 }
 
-.Archivist {
+.Sam {
     color: #ADD8E6;
 }
 

@@ -1,4 +1,5 @@
 const dialogue = [
+    "Scene: Nick descends to the bottom of the data ocean, where he meets Ariel, the data guardian, battling the virus.",
     "Nick: Hello, I'm seeking a way to stop this virus. Can you help?",
     "Ariel: Hello, Nick. Yes, this virus has infected our data ocean. Let's work together to defeat it.",
     "Nick: I'm ready. Let's find a solution.",
@@ -21,20 +22,20 @@ function updateDialogue() {
     const overlayContent = document.getElementById('overlay-content');
     const currentDialogue = dialogue[dialogueIndex];
     const character = currentDialogue.split(': ')[0];
-    const dialogueText = currentDialogue.split(': ')[1];
+    const dialogueText = currentDialogue.split(': ')[1] || currentDialogue; // Added to handle non-dialogue lines
 
     // Apply CSS class based on character
-    if (character.includes('Nick')) {
+    if (character === "Nick") {
         overlayContent.innerHTML = `<span class="Nick">${character}: </span>`;
-    } else if (character.includes('Ariel')) {
+    } else if (character === "Ariel") {
         overlayContent.innerHTML = `<span class="Ariel">${character}: </span>`;
-    } else if (character.includes('Riddle')) {
-        overlayContent.innerHTML = `<span class="Riddle">${character}: </span>`;
+    } else {
+        overlayContent.innerHTML = `<span>${character}: </span>`; // For non-dialogue lines
     }
 
     // Typing animation
     const textElement = overlayContent.querySelector('span');
-    let currentTextIndex = 0; // Reset currentTextIndex
+    currentTextIndex = 0; // Reset currentTextIndex
     interval = setInterval(function() {
         textElement.textContent += dialogueText[currentTextIndex];
         currentTextIndex++;
@@ -43,7 +44,6 @@ function updateDialogue() {
         }
     }, typingSpeed);
 }
-
 
 // Add event listener to "Next" button
 document.getElementById('next-button').addEventListener('click', function() {

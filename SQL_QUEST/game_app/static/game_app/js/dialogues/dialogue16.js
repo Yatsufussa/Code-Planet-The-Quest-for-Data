@@ -1,10 +1,10 @@
 const dialogue = [
-    "Nick: I need information about the virus. Can you help?",
-    "Archivist: Of course, my young friend. But information about the virus is very valuable.",
-    "Nick: I'm willing to pay any price to save the planet.",
-    "Archivist: In that case, let's begin the search.",
-    "Riddle: There is a log of virus-related events in the database. Which table contains this log?"
+    "Scene: Nick enters the realm of computing clouds, where the virus utilizes the power of the cloud for its purposes. He must fight the virus at its source.",
+    "Nick: This is a computing cloud...",
+    "Nick battles the virus, which uses cloud computing for its purposes",
+    "Riddle: To calculate the average value in a column in SQL, a specific function is often used. What function is it?"
 ];
+
 
 // Initialize dialogue index
 let dialogueIndex = 0;
@@ -20,20 +20,20 @@ function updateDialogue() {
     const overlayContent = document.getElementById('overlay-content');
     const currentDialogue = dialogue[dialogueIndex];
     const character = currentDialogue.split(': ')[0];
-    const dialogueText = currentDialogue.split(': ')[1];
+    const dialogueText = currentDialogue.split(': ')[1] || currentDialogue; // Added to handle non-dialogue lines
 
     // Apply CSS class based on character
-    if (character.includes('Nick')) {
+    if (character === "Nick") {
         overlayContent.innerHTML = `<span class="Nick">${character}: </span>`;
-    } else if (character.includes('Archivist')) {
-        overlayContent.innerHTML = `<span class="Archivist">${character}: </span>`;
-    } else if (character.includes('Riddle')) {
-        overlayContent.innerHTML = `<span class="Riddle">${character}: </span>`;
+    } else if (character === "Sam") {
+        overlayContent.innerHTML = `<span class="Sam">${character}: </span>`;
+    } else {
+        overlayContent.innerHTML = `<span>${character}: </span>`; // For non-dialogue lines
     }
 
     // Typing animation
     const textElement = overlayContent.querySelector('span');
-    let currentTextIndex = 0; // Reset currentTextIndex
+    currentTextIndex = 0; // Reset currentTextIndex
     interval = setInterval(function() {
         textElement.textContent += dialogueText[currentTextIndex];
         currentTextIndex++;
@@ -42,7 +42,6 @@ function updateDialogue() {
         }
     }, typingSpeed);
 }
-
 
 // Add event listener to "Next" button
 document.getElementById('next-button').addEventListener('click', function() {
