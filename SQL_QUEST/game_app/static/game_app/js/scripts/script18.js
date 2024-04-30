@@ -45,10 +45,9 @@ document.getElementById("submit-query").addEventListener("click", function() {
     }
 });
 function addPrefixAfterFrom(sqlQuery, prefix) {
-    // Use regular expression to find "FROM" followed by one or more spaces, then add the prefix
-    return sqlQuery.replace(/FROM\s+/i, "FROM " + prefix);
+    // Use regular expression to find "FROM" followed by one or more spaces globally, then add the prefix
+    return sqlQuery.replace(/FROM\s+/gi, "FROM " + prefix);
 }
-
 // Rest of the code remains unchanged...
 
 

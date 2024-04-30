@@ -29,25 +29,26 @@
         </div>
         <div class="content">
             <!-- Heading for the current table -->
-                <h2 class="table-heading">Algorithm_Mountains</h2>
+                <h2 class="table-heading">Mountain_Of_Algorithms</h2>
             <div class="small-box sql-table" id="current-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Names_Of_The_Hacked</th>
-                            <th>Virus_Name</th>
-                            <th>Code_Of_Data</th>
-                            <th>Hacking_Time</th>
+                            <th>Mountain_Name</th>
+                            <th> Way_of_the_Mountain</th>
+                            <th>Path_length</th>
+                            <th>Mountain_Keeper</th>
+
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
                     <tbody>
-                        {% for datafield in datafields %}
+                        {% for datafield in Mountain_Of_Algorithms %}
                             <tr>
-                                <td>{{ datafield.names_of_the_hacked }}</td>
-                                <td>{{ datafield.virus_name }}</td>
-                                <td>{{ datafield.code_of_data }}</td>
-                                <td>{{ datafield.hacking_time }}</td>
+                                <td>{{ datafield.Mountain_Name }}</td>
+                                <td>{{ datafield.Way_of_the_Mountain }}</td>
+                                <td>{{ datafield.Path_length }}</td>
+                                <td>{{ datafield.Mountain_Keeper }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}

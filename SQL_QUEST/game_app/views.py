@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import DataField
+from .models import DataField, LakeData, Mountain_Of_Algorithms, Operator_Forest
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -65,16 +65,16 @@ def level1(request):
 
 def level2(request):
     # Fetch data from the database
-    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    sql_data = LakeData.objects.all()  # Query your database to retrieve data
     # Pass the data to the template
-    return render(request, 'game_app/level2.html', {'datafields': sql_data})
+    return render(request, 'game_app/level2.html', {'LakeData': sql_data})
 
 
 def level3(request):
     # Fetch data from the database
-    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    sql_data = Mountain_Of_Algorithms.objects.all()  # Query your database to retrieve data
     # Pass the data to the template
-    return render(request, 'game_app/level3.html', {'datafields': sql_data})
+    return render(request, 'game_app/level3.html', {'Mountain_Of_Algorithms': sql_data})
 
 
 def level4(request):

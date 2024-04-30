@@ -241,7 +241,7 @@
 .timer {
     position: absolute;
     top: 20px; /* Adjust as needed */
-    left: 1800px; /* Adjust as needed */
+    left: 1700px; /* Adjust as needed */
     font-size: 18px; /* Adjust font size as needed */
     color: white; /* Adjust text color as needed */
 }

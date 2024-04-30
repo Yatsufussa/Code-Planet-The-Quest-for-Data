@@ -26,7 +26,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
     renderTable(sqlQuery);
 
     // Expected correct query for passing the level
-    var correctQuery = "SELECT virus_name FROM game_app_datafield WHERE virus_name='ILOVEYOU';";
+    var correctQuery = "SELECT CONCAT_WS('',(SELECT Way_of_the_Mountain FROM game_app_mountain_of_algorithms WHERE Way_of_the_Mountain = 'Quick'), (SELECT Mountain_Keeper FROM game_app_mountain_of_algorithms WHERE Mountain_Keeper = 'Sort')) AS MountainTechnique;"
 
     // Check if the user's query matches the correct query
      if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
@@ -46,8 +46,8 @@ document.getElementById("submit-query").addEventListener("click", function() {
 });
 
 function addPrefixAfterFrom(sqlQuery, prefix) {
-    // Use regular expression to find "FROM" followed by one or more spaces, then add the prefix
-    return sqlQuery.replace(/FROM\s+/i, "FROM " + prefix);
+    // Use regular expression to find "FROM" followed by one or more spaces globally, then add the prefix
+    return sqlQuery.replace(/FROM\s+/gi, "FROM " + prefix);
 }
 
 // Rest of the code remains unchanged...

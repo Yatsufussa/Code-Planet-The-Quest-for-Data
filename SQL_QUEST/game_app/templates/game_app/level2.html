@@ -29,26 +29,25 @@
         </div>
         <div class="content">
             <!-- Heading for the current table -->
-                <h2 class="table-heading">Datbase_Lake</h2>
+                <h2 class="table-heading">LakeData</h2>
             <div class="small-box sql-table" id="current-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Names_Of_The_Hacked</th>
-                            <th>Virus_Name</th>
-                            <th>Code_Of_Data</th>
-                            <th>Hacking_Time</th>
+                            <th>LakeDatabase</th>
+                            <th>NumberOfAbsorbedFiles</th>
+                            <th>MainFile</th>
+                            <th>InfectionTime</th>
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
                     <tbody>
-                        {% for datafield in datafields %}
+                        {% for datafield in LakeData %}
                             <tr>
-                                <td>{{ datafield.names_of_the_hacked }}</td>
-                                <td>{{ datafield.virus_name }}</td>
-                                <td>{{ datafield.code_of_data }}</td>
-                                <td>{{ datafield.hacking_time }}</td>
-                                <!-- Render other fields as needed -->
+                                <td>{{datafield.LakeDatabase}}</td>
+                                <td>{{datafield.NumberOfAbsorbedFiles}}</td>
+                                <td>{{datafield.MainFile}}</td>
+                                <td>{{datafield.InfectionTime}}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
