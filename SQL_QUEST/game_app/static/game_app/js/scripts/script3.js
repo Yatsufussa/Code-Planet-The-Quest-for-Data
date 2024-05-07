@@ -26,7 +26,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
     renderTable(sqlQuery);
 
     // Expected correct query for passing the level
-    var correctQuery = "SELECT CONCAT_WS('',(SELECT Way_of_the_Mountain FROM game_app_mountain_of_algorithms WHERE Way_of_the_Mountain = 'Quick'), (SELECT Mountain_Keeper FROM game_app_mountain_of_algorithms WHERE Mountain_Keeper = 'Sort')) AS MountainTechnique;"
+    var correctQuery = "SELECT virus_name FROM game_app_datafield WHERE virus_name='ILOVEYOU';"
 
     // Check if the user's query matches the correct query
      if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {

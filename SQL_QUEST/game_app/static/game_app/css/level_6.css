@@ -279,3 +279,35 @@
     background-size: contain; /* Ensure the image covers the entire div */
     background-repeat: no-repeat;
 }
+
+#prevBtn {
+    position: absolute;
+    top: 400px; /* Adjust the top position as needed */
+    right: 150px; /* Adjust the left position as needed */
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Styling for the next button */
+#nextBtn {
+    position: absolute;
+    top: 400px; /* Adjust the top position as needed */
+    right: 100px; /* Adjust the right position as needed */
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for the buttons */
+#prevBtn:hover, #nextBtn:hover {
+    background-color: #45a049;
+}

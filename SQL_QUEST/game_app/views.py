@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import DataField, LakeData, Mountain_Of_Algorithms, Operator_Forest
+from .models import DataField, LakeData, Mountain_Of_Algorithms, Operator_Forest, Cipher_Hills, Cipher_Hills2
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -92,10 +92,15 @@ def level5(request):
 
 
 def level6(request):
-    # Fetch data from the database
-    sql_data = DataField.objects.all()  # Query your database to retrieve data
-    # Pass the data to the template
-    return render(request, 'game_app/level6.html', {'datafields': sql_data})
+    # Fetch data from both models separately
+    cipher_hills_data = Cipher_Hills.objects.all()
+    cipher_hills2_data = Cipher_Hills2.objects.all()
+
+    # Pass the data from each model separately to the template
+    return render(request, 'game_app/level6.html', {
+        'cipher_hills_data': cipher_hills_data,
+        'cipher_hills2_data': cipher_hills2_data
+    })
 
 
 def level7(request):

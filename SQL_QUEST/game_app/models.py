@@ -29,3 +29,20 @@ class Operator_Forest(models.Model):
     FileName = models.CharField(max_length=255, null=True, default=None)
     FileWeight = models.IntegerField(null=True, default=None)
     Operator = models.CharField(max_length=255, null=True, default=None)
+
+
+#lvl 6-1
+class Cipher_Hills(models.Model):
+    tableid = models.IntegerField(null=True)
+    TableName = models.CharField(max_length=255, null=True)
+    RecordData_KB = models.CharField(max_length=255, null=True)
+    DataLoss = models.IntegerField(null=True)
+
+    #lvl6-2
+
+
+class Cipher_Hills2(models.Model):
+    table_id = models.IntegerField(null=True)
+    table_name = models.CharField(max_length=255, null=True)
+    record_data_kb = models.CharField(max_length=255, null=True)
+    data_loss = models.IntegerField(null=True)

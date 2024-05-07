@@ -29,35 +29,56 @@
         </div>
         <div class="content">
             <!-- Heading for the current table -->
-                <h2 class="table-heading">Petabyte_Bay</h2>
+            <h2 class="table-heading">Cipher_Hills</h2>
             <div class="small-box sql-table" id="current-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Names_Of_The_Hacked</th>
-                            <th>Virus_Name</th>
-                            <th>Code_Of_Data</th>
-                            <th>Hacking_Time</th>
+                            <th>tableid</th>
+                            <th>TableName</th>
+                            <th>RecordData_KB</th>
+                            <th>DataLoss</th>
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
                     <tbody>
-                        {% for datafield in datafields %}
+                        {% for datafield in cipher_hills_data %}
                             <tr>
-                                <td>{{ datafield.names_of_the_hacked }}</td>
-                                <td>{{ datafield.virus_name }}</td>
-                                <td>{{ datafield.code_of_data }}</td>
-                                <td>{{ datafield.hacking_time }}</td>
+                                <td>{{ datafield.tableid }}</td>
+                                <td>{{ datafield.TableName }}</td>
+                                <td>{{ datafield.RecordData_KB }}</td>
+                                <td>{{ datafield.DataLoss }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <!-- Dynamic table for results -->
-            <h2 class="table-heading">Your Result</h2>
-            <div class="small-box sql-table" id="dynamic-table">
-                <!-- Dynamic table content will be inserted here -->
+
+            <div class="small-box sql-table" id="second-table" style="display: none;">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>table_id</th>
+                            <th>table_name</th>
+                            <th>record_data_kb</th>
+                            <th>data_loss</th>
+                            <!-- Add more table headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for datafield in cipher_hills2_data %}
+                            <tr>
+                                <td>{{ datafield.table_id }}</td>
+                                <td>{{ datafield.table_name }}</td>
+                                <td>{{ datafield.record_data_kb }}</td>
+                                <td>{{ datafield.data_loss }}</td>
+                                <!-- Render other fields as needed -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -72,6 +93,43 @@
     <script src="{% static 'game_app/js/dialogues/dialogue6.js' %}"></script>
     <script src="{% static 'game_app/js/scripts/script6.js' %}"></script>
     <script src="{% static 'game_app/js/timer.js' %}"></script>
+    <script src="{% static 'game_app/js/second_tables/script6.js' %}"></script>
 
+    <!-- Previous and Next Buttons -->
+    <button id="prevBtn"><</button>
+    <button id="nextBtn">></button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Your JavaScript code here
+            document.getElementById("prevBtn").addEventListener("click", function() {
+                toggleTables('current-table', 'Cipher_Hills');
+            });
+
+            document.getElementById("nextBtn").addEventListener("click", function() {
+                toggleTables('second-table', 'Cipher_Hills2');
+            });
+
+            function toggleTables(tableId, headingText) {
+                console.log("Toggle tables called with tableId:", tableId);
+                var currentTable = document.getElementById("current-table");
+                var secondTable = document.getElementById("second-table");
+                var currentTableHeading = document.querySelector("#current-table .table-heading");
+                var secondTableHeading = document.querySelector("#second-table .table-heading");
+
+                if (tableId === 'current-table') {
+                    currentTable.style.display = "table";
+                    secondTable.style.display = "none";
+                    currentTableHeading.textContent = headingText;
+                    secondTableHeading.textContent = ""; // Clear second table heading
+                } else {
+                    currentTable.style.display = "none";
+                    secondTable.style.display = "table";
+                    currentTableHeading.textContent = ""; // Clear current table heading
+                    secondTableHeading.textContent = headingText; // Update second table heading
+                }
+            }
+        });
+    </script>
 </body>
 </html>

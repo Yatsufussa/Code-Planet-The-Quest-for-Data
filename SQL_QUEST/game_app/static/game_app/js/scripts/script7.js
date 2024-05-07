@@ -26,7 +26,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
     renderTable(sqlQuery);
 
     // Expected correct query for passing the level
-    var correctQuery = "SELECT virus_name FROM game_app_datafield WHERE virus_name='ILOVEYOU';";
+        var correctQuery = "SELECT virus_name FROM game_app_datafield WHERE virus_name='ILOVEYOU';";
 
     // Check if the user's query matches the correct query
      if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
@@ -177,6 +177,5 @@ function renderDynamicTable(queryResult) {
 
     dynamicTable.appendChild(table);
 }
-
 
 
