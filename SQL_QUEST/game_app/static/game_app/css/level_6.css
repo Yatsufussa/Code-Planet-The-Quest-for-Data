@@ -282,7 +282,7 @@
 
 #prevBtn {
     position: absolute;
-    top: 400px; /* Adjust the top position as needed */
+    top: 430px; /* Adjust the top position as needed */
     right: 150px; /* Adjust the left position as needed */
     padding: 10px 20px;
     background-color: #4CAF50;
@@ -296,7 +296,7 @@
 /* Styling for the next button */
 #nextBtn {
     position: absolute;
-    top: 400px; /* Adjust the top position as needed */
+    top: 430px; /* Adjust the top position as needed */
     right: 100px; /* Adjust the right position as needed */
     padding: 10px 20px;
     background-color: #4CAF50;

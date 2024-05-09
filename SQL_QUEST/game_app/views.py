@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import DataField, LakeData, Mountain_Of_Algorithms, Operator_Forest, Cipher_Hills, Cipher_Hills2
+from .models import DataField, LakeData, Mountain_Of_Algorithms, Operator_Forest, Cipher_Hills, PetaByte_Bay, PetaByte_Bay2
+from .models import Optimization_Plateau2, Optimization_Plateau, Index_Valley, Index_Valley2, Lunar_Landscape, Lunar_Landscape2
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -86,15 +87,15 @@ def level4(request):
 
 def level5(request):
     # Fetch data from the database
-    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    sql_data = Operator_Forest.objects.all()  # Query your database to retrieve data
     # Pass the data to the template
     return render(request, 'game_app/level5.html', {'datafields': sql_data})
 
 
 def level6(request):
     # Fetch data from both models separately
-    cipher_hills_data = Cipher_Hills.objects.all()
-    cipher_hills2_data = Cipher_Hills2.objects.all()
+    cipher_hills_data = PetaByte_Bay.objects.all()
+    cipher_hills2_data = PetaByte_Bay2.objects.all()
 
     # Pass the data from each model separately to the template
     return render(request, 'game_app/level6.html', {
@@ -105,30 +106,45 @@ def level6(request):
 
 def level7(request):
     # Fetch data from the database
-    sql_data = DataField.objects.all()  # Query your database to retrieve data
+    sql_data = Cipher_Hills.objects.all()  # Query your database to retrieve data
     # Pass the data to the template
     return render(request, 'game_app/level7.html', {'datafields': sql_data})
 
 
 def level8(request):
-    # Fetch data from the database
-    sql_data = DataField.objects.all()  # Query your database to retrieve data
-    # Pass the data to the template
-    return render(request, 'game_app/level8.html', {'datafields': sql_data})
+    # Fetch data from both models separately
+    Index_Valley_data = Index_Valley.objects.all()
+    Index_Valley2_data = Index_Valley2.objects.all()
+
+    # Pass the data from each model separately to the template
+    return render(request, 'game_app/level6.html', {
+        'cipher_hills_data': Index_Valley_data,
+        'cipher_hills2_data': Index_Valley2_data
+    })
 
 
 def level9(request):
-    # Fetch data from the database
-    sql_data = DataField.objects.all()  # Query your database to retrieve data
-    # Pass the data to the template
-    return render(request, 'game_app/level9.html', {'datafields': sql_data})
+    # Fetch data from both models separately
+    Optimization_Plateau_data = Optimization_Plateau.objects.all()
+    Optimization_Plateau2_data = Optimization_Plateau2.objects.all()
+
+    # Pass the data from each model separately to the template
+    return render(request, 'game_app/level6.html', {
+        'cipher_hills_data': Optimization_Plateau_data,
+        'cipher_hills2_data': Optimization_Plateau2_data
+    })
 
 
 def level10(request):
-    # Fetch data from the database
-    sql_data = DataField.objects.all()  # Query your database to retrieve data
-    # Pass the data to the template
-    return render(request, 'game_app/level10.html', {'datafields': sql_data})
+    # Fetch data from both models separately
+    Lunar_Landscape_data = Lunar_Landscape.objects.all()
+    Lunar_Landscape2_data = Lunar_Landscape2.objects.all()
+
+    # Pass the data from each model separately to the template
+    return render(request, 'game_app/level6.html', {
+        'cipher_hills_data': Lunar_Landscape_data,
+        'cipher_hills2_data': Lunar_Landscape2_data
+    })
 
 
 def level11(request):

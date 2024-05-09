@@ -1,30 +1,34 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Your JavaScript code here
+    // Define the click event listener for the Prev button
     document.getElementById("prevBtn").addEventListener("click", function() {
-        toggleTables('current-table', 'Cipher_Hills');
+        toggleTables('current-table', 'PetaByte_Bay');
     });
 
+    // Define the click event listener for the Next button
     document.getElementById("nextBtn").addEventListener("click", function() {
-        toggleTables('second-table', 'Cipher_Hills2');
+        toggleTables('second-table', 'PetaByte_Bay2');
     });
 
+    // Define the function to toggle tables and update headings
     function toggleTables(tableId, headingText) {
-        console.log("Toggle tables called with tableId:", tableId);
         var currentTable = document.getElementById("current-table");
         var secondTable = document.getElementById("second-table");
-        var currentTableHeading = document.querySelector("#current-table .table-heading");
-        var secondTableHeading = document.querySelector("#second-table .table-heading");
+        var currentTableHeading = document.getElementById("current-table-heading");
+        var secondTableHeading = document.getElementById("second-table-heading");
 
+        // Toggle table display based on the provided tableId
         if (tableId === 'current-table') {
             currentTable.style.display = "table";
             secondTable.style.display = "none";
             currentTableHeading.textContent = headingText;
-            secondTableHeading.textContent = ""; // Clear second table heading
+            currentTableHeading.style.display = "block"; // Show current table heading
+            secondTableHeading.style.display = "none"; // Hide second table heading
         } else {
             currentTable.style.display = "none";
             secondTable.style.display = "table";
-            currentTableHeading.textContent = ""; // Clear current table heading
-            secondTableHeading.textContent = headingText; // Update second table heading
+            currentTableHeading.style.display = "none"; // Hide current table heading
+            secondTableHeading.textContent = headingText; // Update and show second table heading
+            secondTableHeading.style.display = "block";
         }
     }
 });

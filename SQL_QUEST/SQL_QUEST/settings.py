@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'SQL_QUEST.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sql_game',  # Replace 'your_database_name' with your MySQL database name
+        'NAME': 'DB_PROJECT',  # Replace 'your_database_name' with your MySQL database name
         'USER': 'Shuhrat',  # Replace 'your_mysql_username' with your MySQL username
         'PASSWORD': '!Shuhyatsufussa@2003#07&01!',  # Replace 'your_mysql_password' with your MySQL password
         'HOST': '127.0.0.1',  # Replace 'localhost' with your MySQL host (e.g., '127.0.0.1')

@@ -34,20 +34,22 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Names_Of_The_Hacked</th>
-                            <th>Virus_Name</th>
-                            <th>Code_Of_Data</th>
-                            <th>Hacking_Time</th>
+                            <th>TrailId</th>
+                            <th>VirusName</th>
+                            <th>FileName</th>
+                            <th>FileWeight</th>
+                            <th>Operator</th>
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
                     <tbody>
                         {% for datafield in datafields %}
                             <tr>
-                                <td>{{ datafield.names_of_the_hacked }}</td>
-                                <td>{{ datafield.virus_name }}</td>
-                                <td>{{ datafield.code_of_data }}</td>
-                                <td>{{ datafield.hacking_time }}</td>
+                                <td>{{ datafield.TrailId }}</td>
+                                <td>{{ datafield.VirusName }}</td>
+                                <td>{{ datafield.FileName }}</td>
+                                <td>{{ datafield.FileWeight }}</td>
+                                <td>{{ datafield.Operator }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}

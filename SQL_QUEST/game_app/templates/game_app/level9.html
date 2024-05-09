@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start Game</title>
-    <link rel="stylesheet" href="{% static 'game_app/css/level_9.css' %}">
+    <link rel="stylesheet" href="{% static 'game_app/css/level_6.css' %}">
 </head>
 <body class="souls-like">
     <div id="timer" class="timer">Time: 00:00</div>
@@ -29,35 +29,56 @@
         </div>
         <div class="content">
             <!-- Heading for the current table -->
-                <h2 class="table-heading">Optimization_Plateau</h2>
+            <h2 class="table-heading">Optimization_Plateau</h2>
             <div class="small-box sql-table" id="current-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Names_Of_The_Hacked</th>
-                            <th>Virus_Name</th>
-                            <th>Code_Of_Data</th>
-                            <th>Hacking_Time</th>
+                            <th>IndexType</th>
+                            <th>DataSize</th>
+                            <th>ContaminatedDataKB</th>
+                            <th>Operators</th>
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
                     <tbody>
-                        {% for datafield in datafields %}
+                        {% for datafield in Optimization_Plateau_data %}
                             <tr>
-                                <td>{{ datafield.names_of_the_hacked }}</td>
-                                <td>{{ datafield.virus_name }}</td>
-                                <td>{{ datafield.code_of_data }}</td>
-                                <td>{{ datafield.hacking_time }}</td>
+                                <td>{{ datafield.IndexType }}</td>
+                                <td>{{ datafield.DataSize }}</td>
+                                <td>{{ datafield.ContaminatedDataKB }}</td>
+                                <td>{{ datafield.Operators }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <!-- Dynamic table for results -->
-            <h2 class="table-heading">Your Result</h2>
-            <div class="small-box sql-table" id="dynamic-table">
-                <!-- Dynamic table content will be inserted here -->
+
+            <div class="small-box sql-table" id="second-table" style="display: none;">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>IndexType</th>
+                            <th>DataSize</th>
+                            <th>ContaminatedDataKB</th>
+                            <th>Operators</th>
+                            <!-- Add more table headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for datafield in Optimization_Plateau2_data %}
+                            <tr>
+                                <td>{{ datafield.IndexType }}</td>
+                                <td>{{ datafield.DataSize }}</td>
+                                <td>{{ datafield.ContaminatedDataKB }}</td>
+                                <td>{{ datafield.Operators }}</td>
+                                <!-- Render other fields as needed -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -69,9 +90,14 @@
     <h2 class="ritual-heading">Write Your Dark Ritual</h2>
 
     <!-- Link to external JavaScript files -->
-    <script src="{% static 'game_app/js/dialogues/dialogue9.js' %}"></script>
-    <script src="{% static 'game_app/js/scripts/script9.js' %}"></script>
+    <script src="{% static 'game_app/js/dialogues/dialogue6.js' %}"></script>
+    <script src="{% static 'game_app/js/scripts/script6.js' %}"></script>
     <script src="{% static 'game_app/js/timer.js' %}"></script>
+    <script src="{% static 'game_app/js/second_tables/script6.js' %}"></script>
+
+    <!-- Previous and Next Buttons -->
+    <button id="prevBtn"><</button>
+    <button id="nextBtn">></button>
 
 </body>
 </html>

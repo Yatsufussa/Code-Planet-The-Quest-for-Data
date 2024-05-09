@@ -34,10 +34,10 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Mountain_Name</th>
-                            <th> Way_of_the_Mountain</th>
-                            <th>Path_length</th>
-                            <th>Mountain_Keeper</th>
+                            <th>MountainName</th>
+                            <th> WayOfTheMountain</th>
+                            <th>PathLength</th>
+                            <th>MountainKeeper</th>
 
                             <!-- Add more table headers as needed -->
                         </tr>
@@ -45,10 +45,10 @@
                     <tbody>
                         {% for datafield in Mountain_Of_Algorithms %}
                             <tr>
-                                <td>{{ datafield.Mountain_Name }}</td>
-                                <td>{{ datafield.Way_of_the_Mountain }}</td>
-                                <td>{{ datafield.Path_length }}</td>
-                                <td>{{ datafield.Mountain_Keeper }}</td>
+                                <td>{{ datafield.MountainName }}</td>
+                                <td>{{ datafield.WayOfTheMountain }}</td>
+                                <td>{{ datafield.PathLength }}</td>
+                                <td>{{ datafield.MountainKeeper }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}

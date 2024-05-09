@@ -28,15 +28,14 @@
             </div>
         </div>
         <div class="content">
-            <!-- Heading for the current table -->
-            <h2 class="table-heading">Cipher_Hills</h2>
+            <<h2 id="current-table-heading" class="table-heading">PetaByte_Bay</h2>
             <div class="small-box sql-table" id="current-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>tableid</th>
+                            <th>TableId</th>
                             <th>TableName</th>
-                            <th>RecordData_KB</th>
+                            <th>RecordDataKB</th>
                             <th>DataLoss</th>
                             <!-- Add more table headers as needed -->
                         </tr>
@@ -44,9 +43,9 @@
                     <tbody>
                         {% for datafield in cipher_hills_data %}
                             <tr>
-                                <td>{{ datafield.tableid }}</td>
+                                <td>{{ datafield.TableId }}</td>
                                 <td>{{ datafield.TableName }}</td>
-                                <td>{{ datafield.RecordData_KB }}</td>
+                                <td>{{ datafield.RecordDataKB }}</td>
                                 <td>{{ datafield.DataLoss }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
@@ -54,31 +53,34 @@
                     </tbody>
                 </table>
             </div>
-
+            <h2 id="second-table-heading" class="table-heading" style="display: none;">PetaByte_Bay2</h2>
             <div class="small-box sql-table" id="second-table" style="display: none;">
-
                 <table>
                     <thead>
                         <tr>
-                            <th>table_id</th>
-                            <th>table_name</th>
-                            <th>record_data_kb</th>
-                            <th>data_loss</th>
+                            <th>TableId</th>
+                            <th>TableName</th>
+                            <th>RecordDataKB</th>
+                            <th>DataLoss</th>
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
                     <tbody>
                         {% for datafield in cipher_hills2_data %}
                             <tr>
-                                <td>{{ datafield.table_id }}</td>
-                                <td>{{ datafield.table_name }}</td>
-                                <td>{{ datafield.record_data_kb }}</td>
-                                <td>{{ datafield.data_loss }}</td>
+                                <td>{{ datafield.TableId }}</td>
+                                <td>{{ datafield.TableName }}</td>
+                                <td>{{ datafield.RecordDataKB }}</td>
+                                <td>{{ datafield.DataLoss }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
+            <h2 class="table-heading">Your Result</h2>
+            <div class="small-box sql-table" id="dynamic-table">
+                <!-- Dynamic table content will be inserted here -->
             </div>
         </div>
     </div>
@@ -99,37 +101,5 @@
     <button id="prevBtn"><</button>
     <button id="nextBtn">></button>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Your JavaScript code here
-            document.getElementById("prevBtn").addEventListener("click", function() {
-                toggleTables('current-table', 'Cipher_Hills');
-            });
-
-            document.getElementById("nextBtn").addEventListener("click", function() {
-                toggleTables('second-table', 'Cipher_Hills2');
-            });
-
-            function toggleTables(tableId, headingText) {
-                console.log("Toggle tables called with tableId:", tableId);
-                var currentTable = document.getElementById("current-table");
-                var secondTable = document.getElementById("second-table");
-                var currentTableHeading = document.querySelector("#current-table .table-heading");
-                var secondTableHeading = document.querySelector("#second-table .table-heading");
-
-                if (tableId === 'current-table') {
-                    currentTable.style.display = "table";
-                    secondTable.style.display = "none";
-                    currentTableHeading.textContent = headingText;
-                    secondTableHeading.textContent = ""; // Clear second table heading
-                } else {
-                    currentTable.style.display = "none";
-                    secondTable.style.display = "table";
-                    currentTableHeading.textContent = ""; // Clear current table heading
-                    secondTableHeading.textContent = headingText; // Update second table heading
-                }
-            }
-        });
-    </script>
 </body>
 </html>
