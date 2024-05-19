@@ -1,54 +1,112 @@
-document.getElementById("submit-query").addEventListener("click", function() {
-    var sqlQuery = document.getElementById("sql-query").value.trim(); // Trim to remove leading and trailing whitespace
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
-    // Check for specific SQL queries and display custom alert messages
-    if (sqlQuery.toLowerCase().includes("delete")) {
-        showAlert("Are you sure you want to delete data?"); // Alert message for delete query
-        return;
-    } else if (sqlQuery.toLowerCase().includes("update")) {
-        showAlert("Are you sure you want to update data?"); // Alert message for update query
-        return;
-    } else if (sqlQuery.toLowerCase().includes("insert")) {
-        showAlert("Are you sure you want to insert data?"); // Alert message for insert query
-        return;
-    } else if (sqlQuery.toLowerCase().includes("drop")) {
-        showAlert("Are you sure you want to drop a table?"); // Alert message for drop query
+// Retrieve the CSRF token
+var csrftoken = getCookie('csrftoken');
+var playerId;
+
+// Fetch the player ID when the page loads
+getPlayerId().then(id => {
+    playerId = id;
+}).catch(error => {
+    console.error('Error fetching player ID:', error);
+});
+function getPlayerId() {
+    return fetch('/get_player_id/')
+        .then(response => response.json())
+        .then(data => data.player_id)
+        .catch(error => {
+            console.error('Error fetching player ID:', error);
+            return null;
+        });
+}
+document.getElementById("submit-query").addEventListener("click", function() {
+    var sqlQuery = document.getElementById("sql-query").value.trim();
+
+    if (sqlQuery.toLowerCase().includes("delete") ||
+        sqlQuery.toLowerCase().includes("update") ||
+        sqlQuery.toLowerCase().includes("insert") ||
+        sqlQuery.toLowerCase().includes("drop")) {
+        showAlert("Are you sure you want to perform this operation?");
         return;
     }
 
-    // Modify SQL query to add prefix after "FROM"
     sqlQuery = addPrefixAfterFrom(sqlQuery, 'game_app_');
-
-    // Log the modified SQL query to the console for verification
     console.log("Modified SQL Query:", sqlQuery);
 
-    // Render the table based on the entered query
     renderTable(sqlQuery);
 
-    // Expected correct query for passing the level
-    var correctQuery = "SELECT virus_name FROM game_app_datafield WHERE virus_name='ILOVEYOU';";
+    var correctQuery = "SELECT virusname FROM game_app_datafield WHERE virusname='ILOVEYOU';";
 
-    // Check if the user's query matches the correct query
-     if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
-        // Show success alert with green color
+    // Normalize spaces and cases for comparison
+    var normalizedSqlQuery = sqlQuery.replace(/\s+/g, ' ').trim().toLowerCase();
+    var normalizedCorrectQuery = correctQuery.replace(/\s+/g, ' ').trim().toLowerCase();
+
+    console.log("Normalized SQL Query:", normalizedSqlQuery);
+    console.log("Normalized Correct Query:", normalizedCorrectQuery);
+
+    if (normalizedSqlQuery === normalizedCorrectQuery) {
         showAlertSuccess("Congratulations! You passed the level.");
+        var elapsedTime = (new Date().getTime() - startTime) / 1000; // Calculate elapsed time in seconds
+        recordLevelCompletion(playerId, elapsedTime);
 
-        // Disable the submit button temporarily
         document.getElementById("submit-query").disabled = true;
-
-        // Redirect to the next page after 3 seconds
         setTimeout(function() {
             window.location.href = "/level9/";
         }, 3000);
     } else {
-        showAlert("Not correct, try again..."); // Show alert if query does not match
+        showAlert("Not correct, try again...");
     }
 });
+
+function recordLevelCompletion(playerId, elapsedTime) {
+    fetch('/record_level_completion/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            'player_id': playerId,
+            'level_id': 8,  // Replace with the actual level ID
+            'elapsed_time': elapsedTime  // Pass the elapsed time in seconds
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Level completion recorded successfully.");
+        } else {
+            console.error("Failed to record level completion.");
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+window.onload = function() {
+    startTimer();
+};
+
+
 
 function addPrefixAfterFrom(sqlQuery, prefix) {
     // Use regular expression to find "FROM" followed by one or more spaces globally, then add the prefix
     return sqlQuery.replace(/FROM\s+/gi, "FROM " + prefix);
 }
+
 // Rest of the code remains unchanged...
 
 
@@ -104,20 +162,6 @@ function showAlertSuccess(message) {
 }
 
 
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
 
 function executeQuery(sqlQuery, callback) {
     console.log("SQL Query:", sqlQuery);

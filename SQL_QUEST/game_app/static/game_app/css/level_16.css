@@ -265,3 +265,34 @@
 .Riddle {
     color: #FF5733;
 }
+#prevBtn {
+    position: absolute;
+    top: 50px; /* Adjust the top position as needed */
+    right: 300px; /* Adjust the left position as needed */
+    padding: 10px 20px;
+    background-color: #133B53;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Styling for the next button */
+#nextBtn {
+    position: absolute;
+    top: 50px; /* Adjust the top position as needed */
+    right: 250px; /* Adjust the right position as needed */
+    padding: 10px 20px;
+    background-color: #133B53;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for the buttons */
+#prevBtn:hover, #nextBtn:hover {
+    background-color: #45a049;
+}

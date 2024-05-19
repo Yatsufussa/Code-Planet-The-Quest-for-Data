@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start Game</title>
-    <link rel="stylesheet" href="{% static 'game_app/css/level_10.css' %}">
+    <link rel="stylesheet" href="{% static 'game_app/css/level_17.css' %}">
 </head>
 <body class="souls-like">
     <div id="timer" class="timer">Time: 00:00</div>
@@ -28,33 +28,56 @@
             </div>
         </div>
         <div class="content">
-            <!-- Heading for the current table -->
-                <h2 class="table-heading">Database_Depths</h2>
+            <<h2 id="current-table-heading" class="table-heading">DatabaseDepths</h2>
             <div class="small-box sql-table" id="current-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Names_Of_The_Hacked</th>
-                            <th>Virus_Name</th>
-                            <th>Code_Of_Data</th>
-                            <th>Hacking_Time</th>
+                            <th>database_name</th>
+                            <th>lvl_of_database</th>
+                            <th>virus_found</th>
+                            <th>database_info</th>
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
                     <tbody>
-                        {% for datafield in datafields %}
+                        {% for datafield in cipher_hills_data %}
                             <tr>
-                                <td>{{ datafield.names_of_the_hacked }}</td>
-                                <td>{{ datafield.virus_name }}</td>
-                                <td>{{ datafield.code_of_data }}</td>
-                                <td>{{ datafield.hacking_time }}</td>
+                                <td>{{ datafield.database_name }}</td>
+                                <td>{{ datafield.lvl_of_database }}</td>
+                                <td>{{ datafield.virus_found }}</td>
+                                <td>{{ datafield.database_info }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <!-- Dynamic table for results -->
+            <h2 id="second-table-heading" class="table-heading" style="display: none;">DatabaseDepths2</h2>
+            <div class="small-box sql-table" id="second-table" style="display: none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>database_name</th>
+                            <th>lvl_of_database</th>
+                            <th>virus_found</th>
+                            <th>database_info</th>
+                            <!-- Add more table headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for datafield in cipher_hills2_data %}
+                            <tr>
+                                <td>{{ datafield.database_name }}</td>
+                                <td>{{ datafield.lvl_of_database }}</td>
+                                <td>{{ datafield.virus_found }}</td>
+                                <td>{{ datafield.database_info }}</td>
+                                <!-- Render other fields as needed -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             <h2 class="table-heading">Your Result</h2>
             <div class="small-box sql-table" id="dynamic-table">
                 <!-- Dynamic table content will be inserted here -->
@@ -72,6 +95,11 @@
     <script src="{% static 'game_app/js/dialogues/dialogue17.js' %}"></script>
     <script src="{% static 'game_app/js/scripts/script17.js' %}"></script>
     <script src="{% static 'game_app/js/timer.js' %}"></script>
+    <script src="{% static 'game_app/js/second_tables/script17.js' %}"></script>
+
+    <!-- Previous and Next Buttons -->
+    <button id="prevBtn"><</button>
+    <button id="nextBtn">></button>
 
 </body>
 </html>

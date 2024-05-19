@@ -28,33 +28,56 @@
             </div>
         </div>
         <div class="content">
-            <!-- Heading for the current table -->
-                <h2 class="table-heading">Archives_City</h2>
+            <<h2 id="current-table-heading" class="table-heading">ArchivesCity</h2>
             <div class="small-box sql-table" id="current-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Names_Of_The_Hacked</th>
-                            <th>Virus_Name</th>
-                            <th>Code_Of_Data</th>
-                            <th>Hacking_Time</th>
+                            <th>folder_id</th>
+                            <th>table_name</th>
+                            <th>num_of_events</th>
+                            <th>ascii_helper</th>
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
                     <tbody>
-                        {% for datafield in datafields %}
+                        {% for datafield in cipher_hills_data %}
                             <tr>
-                                <td>{{ datafield.names_of_the_hacked }}</td>
-                                <td>{{ datafield.virus_name }}</td>
-                                <td>{{ datafield.code_of_data }}</td>
-                                <td>{{ datafield.hacking_time }}</td>
+                                <td>{{ datafield.folder_id }}</td>
+                                <td>{{ datafield.table_name }}</td>
+                                <td>{{ datafield.num_of_events }}</td>
+                                <td>{{ datafield.ascii_helper }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <!-- Dynamic table for results -->
+            <h2 id="second-table-heading" class="table-heading" style="display: none;">ArchivesCity2</h2>
+            <div class="small-box sql-table" id="second-table" style="display: none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>folder_id</th>
+                            <th>table_name</th>
+                            <th>num_of_events</th>
+                            <th>ascii_helper</th>
+                            <!-- Add more table headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for datafield in cipher_hills2_data %}
+                            <tr>
+                                <td>{{ datafield.folder_id }}</td>
+                                <td>{{ datafield.table_name }}</td>
+                                <td>{{ datafield.num_of_events }}</td>
+                                <td>{{ datafield.ascii_helper }}</td>
+                                <!-- Render other fields as needed -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             <h2 class="table-heading">Your Result</h2>
             <div class="small-box sql-table" id="dynamic-table">
                 <!-- Dynamic table content will be inserted here -->
@@ -72,6 +95,11 @@
     <script src="{% static 'game_app/js/dialogues/dialogue12.js' %}"></script>
     <script src="{% static 'game_app/js/scripts/script12.js' %}"></script>
     <script src="{% static 'game_app/js/timer.js' %}"></script>
+    <script src="{% static 'game_app/js/second_tables/script12.js' %}"></script>
+
+    <!-- Previous and Next Buttons -->
+    <button id="prevBtn"><</button>
+    <button id="nextBtn">></button>
 
 </body>
 </html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start Game</title>
-    <link rel="stylesheet" href="{% static 'game_app/css/level_6.css' %}">
+    <link rel="stylesheet" href="{% static 'game_app/css/level_8.css' %}">
 </head>
 <body class="souls-like">
     <div id="timer" class="timer">Time: 00:00</div>
@@ -28,8 +28,7 @@
             </div>
         </div>
         <div class="content">
-            <!-- Heading for the current table -->
-            <h2 class="table-heading">Index_Valley</h2>
+            <<h2 id="current-table-heading" class="table-heading">PetaByte_Bay</h2>
             <div class="small-box sql-table" id="current-table">
                 <table>
                     <thead>
@@ -45,25 +44,24 @@
                         {% for datafield in cipher_hills_data %}
                             <tr>
                                 <td>{{ datafield.TheDataBase }}</td>
-                                <td>{{ datafield.TableName }}</td>
-                                <td>{{ datafield.RecordData_KB }}</td>
-                                <td>{{ datafield.DataLoss }}</td>
+                                <td>{{ datafield.IndexType }}</td>
+                                <td>{{ datafield.MainFile }}</td>
+                                <td>{{ datafield.FileContents }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-
+            <h2 id="second-table-heading" class="table-heading" style="display: none;">PetaByte_Bay2</h2>
             <div class="small-box sql-table" id="second-table" style="display: none;">
-
                 <table>
                     <thead>
                         <tr>
                             <th>TheDataBase</th>
-                            <th>TableName</th>
-                            <th>RecordData_KB</th>
-                            <th>DataLoss</th>
+                            <th>IndexType</th>
+                            <th>MainFile</th>
+                            <th>FileContents</th>
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
@@ -71,14 +69,18 @@
                         {% for datafield in cipher_hills2_data %}
                             <tr>
                                 <td>{{ datafield.TheDataBase }}</td>
-                                <td>{{ datafield.TableName }}</td>
-                                <td>{{ datafield.RecordData_KB }}</td>
-                                <td>{{ datafield.DataLoss }}</td>
+                                <td>{{ datafield.IndexType }}</td>
+                                <td>{{ datafield.MainFile }}</td>
+                                <td>{{ datafield.FileContents }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
+            <h2 class="table-heading">Your Result</h2>
+            <div class="small-box sql-table" id="dynamic-table">
+                <!-- Dynamic table content will be inserted here -->
             </div>
         </div>
     </div>
@@ -90,10 +92,10 @@
     <h2 class="ritual-heading">Write Your Dark Ritual</h2>
 
     <!-- Link to external JavaScript files -->
-    <script src="{% static 'game_app/js/dialogues/dialogue6.js' %}"></script>
-    <script src="{% static 'game_app/js/scripts/script6.js' %}"></script>
+    <script src="{% static 'game_app/js/dialogues/dialogue8.js' %}"></script>
+    <script src="{% static 'game_app/js/scripts/script8.js' %}"></script>
     <script src="{% static 'game_app/js/timer.js' %}"></script>
-    <script src="{% static 'game_app/js/second_tables/script6.js' %}"></script>
+    <script src="{% static 'game_app/js/second_tables/script8.js' %}"></script>
 
     <!-- Previous and Next Buttons -->
     <button id="prevBtn"><</button>

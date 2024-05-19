@@ -61,7 +61,7 @@
     border-radius: 10px;
     overflow-x: auto;
     max-width: 100%;
-    width: 93%;
+    width: 85%;
     padding: 20px;
     margin-bottom: 10px; /* Adjusted margin between tables */
     margin-right: 100px;
@@ -250,11 +250,11 @@
 .additional-image2 {
     /* Positioning */
     position: absolute;
-    top: 400px; /* Adjust as needed */
-    left: 800px; /* Adjust as needed */
+    top: 300px; /* Adjust as needed */
+    left: 700px; /* Adjust as needed */
     /* Other styles as needed */
-    width: 400px;
-    height: 500px;
+    width: 500px;
+    height: 600px;
     z-index: 1;
     background-image: url('/static/game_app/images/game-character9.png'); /* Set the background image */
     background-size: contain; /* Ensure the image covers the entire div */
@@ -278,4 +278,35 @@
 
 .Riddle {
     color: #FF5733;
+}
+#prevBtn {
+    position: absolute;
+    top: 50px; /* Adjust the top position as needed */
+    right: 300px; /* Adjust the left position as needed */
+    padding: 10px 20px;
+    background-color: #133B53;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Styling for the next button */
+#nextBtn {
+    position: absolute;
+    top: 50px; /* Adjust the top position as needed */
+    right: 250px; /* Adjust the right position as needed */
+    padding: 10px 20px;
+    background-color: #133B53;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for the buttons */
+#prevBtn:hover, #nextBtn:hover {
+    background-color: #45a049;
 }

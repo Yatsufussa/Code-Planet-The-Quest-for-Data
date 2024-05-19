@@ -28,33 +28,56 @@
             </div>
         </div>
         <div class="content">
-            <!-- Heading for the current table -->
-                <h2 class="table-heading">API_Fields</h2>
+            <<h2 id="current-table-heading" class="table-heading">APIFields</h2>
             <div class="small-box sql-table" id="current-table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Names_Of_The_Hacked</th>
-                            <th>Virus_Name</th>
-                            <th>Code_Of_Data</th>
-                            <th>Hacking_Time</th>
+                            <th>programmer_name</th>
+                            <th>method_request</th>
+                            <th>api</th>
+                            <th>virus_file_detected</th>
                             <!-- Add more table headers as needed -->
                         </tr>
                     </thead>
                     <tbody>
-                        {% for datafield in datafields %}
+                        {% for datafield in cipher_hills_data %}
                             <tr>
-                                <td>{{ datafield.names_of_the_hacked }}</td>
-                                <td>{{ datafield.virus_name }}</td>
-                                <td>{{ datafield.code_of_data }}</td>
-                                <td>{{ datafield.hacking_time }}</td>
+                                <td>{{ datafield.programmer_name }}</td>
+                                <td>{{ datafield.method_request }}</td>
+                                <td>{{ datafield.api }}</td>
+                                <td>{{ datafield.virus_file_detected }}</td>
                                 <!-- Render other fields as needed -->
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <!-- Dynamic table for results -->
+            <h2 id="second-table-heading" class="table-heading" style="display: none;">APIFields2</h2>
+            <div class="small-box sql-table" id="second-table" style="display: none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>programmer_name</th>
+                            <th>method_request</th>
+                            <th>api</th>
+                            <th>virus_file_detected</th>
+                            <!-- Add more table headers as needed -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for datafield in cipher_hills2_data %}
+                            <tr>
+                                <td>{{ datafield.programmer_name }}</td>
+                                <td>{{ datafield.method_request }}</td>
+                                <td>{{ datafield.api }}</td>
+                                <td>{{ datafield.virus_file_detected }}</td>
+                                <!-- Render other fields as needed -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             <h2 class="table-heading">Your Result</h2>
             <div class="small-box sql-table" id="dynamic-table">
                 <!-- Dynamic table content will be inserted here -->
@@ -72,6 +95,11 @@
     <script src="{% static 'game_app/js/dialogues/dialogue14.js' %}"></script>
     <script src="{% static 'game_app/js/scripts/script14.js' %}"></script>
     <script src="{% static 'game_app/js/timer.js' %}"></script>
+    <script src="{% static 'game_app/js/second_tables/script14.js' %}"></script>
+
+    <!-- Previous and Next Buttons -->
+    <button id="prevBtn"><</button>
+    <button id="nextBtn">></button>
 
 </body>
 </html>
