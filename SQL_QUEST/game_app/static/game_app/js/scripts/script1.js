@@ -63,7 +63,6 @@ document.getElementById("submit-query").addEventListener("click", function() {
         showAlert("Not correct, try again...");
     }
 });
-
 function recordLevelCompletion(playerId, elapsedTime) {
     fetch('/record_level_completion/', {
         method: 'POST',
@@ -81,7 +80,9 @@ function recordLevelCompletion(playerId, elapsedTime) {
         if (response.ok) {
             console.log("Level completion recorded successfully.");
         } else {
-            console.error("Failed to record level completion.");
+            response.json().then(data => {
+                console.error("Failed to record level completion:", data.error);
+            });
         }
     })
     .catch(error => {
@@ -213,6 +214,3 @@ function renderDynamicTable(queryResult) {
 
     dynamicTable.appendChild(table);
 }
-
-
-

@@ -1,0 +1,36 @@
+<!-- leaderboard.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="{% static 'game_app/css/leaderboards.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Leaderboard</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Total Time</th>
+                    <th>Levels Passed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in leaderboard_data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ entry.player__nickname }}</td>
+                    <td>{{ entry.total_time }}</td>
+                    <td>{{ entry.levels_passed }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

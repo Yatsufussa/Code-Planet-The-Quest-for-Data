@@ -1,10 +1,14 @@
 from django.shortcuts import render, redirect
-
-from .models import DataField, LakeData, Mountain_Of_Algorithms, Operator_Forest, Cipher_Hills, PetaByte_Bay, Pass,\
-    PetaByte_Bay2, Player, Level, ExperiencePoints,Log_Desrt, PlanetDungeons, PlanetDungeons2, ArchivesCity, ArchivesCity2, FinalShowdown, FinalShowdown2
-from .models import Optimization_Plateau2, Optimization_Plateau, Index_Valley, Index_Valley2, Lunar_Landscape,Lunar_Landscape2 , QueryFactory, QueryFactory2, APIFields, APIFields2
-from .models import SecurityCastle, SecurityCastle2, ProcessingClouds, ProcessingClouds2, DatabaseDepths, DatabaseDepths2, CodeCodeksRidge, CodeCodeksRidge2, DataManagementCenter, DataManagementCenter2
+from django.db.models import Sum, Count
+from .models import DataField, LakeData, Mountain_Of_Algorithms, Operator_Forest, Cipher_Hills, PetaByte_Bay, Pass, \
+    PetaByte_Bay2, Player, Level, ExperiencePoints, Log_Desrt, PlanetDungeons, PlanetDungeons2, ArchivesCity, \
+    ArchivesCity2, FinalShowdown, FinalShowdown2, RetryAttempt
+from .models import Optimization_Plateau2, Optimization_Plateau, Index_Valley, Index_Valley2, Lunar_Landscape, \
+    Lunar_Landscape2, QueryFactory, QueryFactory2, APIFields, APIFields2
+from .models import SecurityCastle, SecurityCastle2, ProcessingClouds, ProcessingClouds2, DatabaseDepths, \
+    DatabaseDepths2, CodeCodeksRidge, CodeCodeksRidge2, DataManagementCenter, DataManagementCenter2
 import json
+from django.db.models import F
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
@@ -15,6 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Player, Level, Pass, ExperiencePoints, Performance
 import json
 from datetime import timedelta
+
 
 def register_player(request):
     if request.method == 'POST':
@@ -27,6 +32,16 @@ def register_player(request):
         form = PlayerRegistrationForm()
     return render(request, 'game_app/registration.html', {'form': form})
 
+
+def leaderboard(request):
+    # Annotate players with the total completion time and count of distinct levels passed
+    leaderboard_data = (
+        Pass.objects.values('player__nickname')
+        .annotate(total_time=Sum('time'), levels_passed=Count('level', distinct=True))
+        .order_by('total_time')
+    )
+    return render(request, 'game_app/leaderboard.html', {'leaderboard_data': leaderboard_data})
+
 def get_player_id(request):
     if request.method == 'GET':
         player_id = request.session.get('player_id')
@@ -36,6 +51,8 @@ def get_player_id(request):
             return JsonResponse({'error': 'Player ID not found'}, status=404)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
 @csrf_exempt
 def record_level_completion(request):
     if request.method == 'POST':
@@ -47,6 +64,7 @@ def record_level_completion(request):
 
             if not player_id or not level_id or not elapsed_time:
                 return JsonResponse({'error': 'Missing data'}, status=400)
+            print(f"Received data: player_id={player_id}, level_id={level_id}, elapsed_time={elapsed_time}")
 
             elapsed_time = timedelta(seconds=elapsed_time)
             level = Level.objects.get(id=level_id)
@@ -90,7 +108,8 @@ def record_level_completion(request):
             )
 
             # Calculate total experience points for the player
-            total_experience_points = ExperiencePoints.objects.filter(player=player).aggregate(total=models.Sum('points'))['total']
+            total_experience_points = \
+            ExperiencePoints.objects.filter(player=player).aggregate(total=models.Sum('points'))['total']
 
             # Determine the player's new level
             new_level = total_experience_points // 1000
@@ -121,9 +140,7 @@ def about_us(request):
     return render(request, 'game_app/level1.html')
 
 
-def leaders_sheet(request):
-    # Add logic to start a new game (if needed)
-    return render(request, 'game_app/level1.html')
+
 
 
 @csrf_exempt

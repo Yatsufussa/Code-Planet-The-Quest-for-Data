@@ -2,12 +2,13 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    path('register_player/', views.register_player, name='register_player'),  # URL pattern for player registration
+    path('', views.register_player, name='register_player'),  # URL pattern for player registration
     path('main_menu/', views.home, name='main_menu'),
-path('get_player_id/', views.get_player_id, name='get_player_id'),
+    path('get_player_id/', views.get_player_id, name='get_player_id'),
+    path('register_player/', views.register_player, name='register_player'),
+    path('leaderboard/', views.leaderboard, name='leaderboard'),
     path('record_level_completion/', views.record_level_completion, name='record_level_completion'),
     path('execute_query/', views.execute_query, name='execute_query'),
-    path('leaders_sheet/', views.leaders_sheet, name='leaders_sheet'),
     path('settings/', views.settings, name='settings'),
     path('about_us/', views.about_us, name='about_us'),
     path('level1/', views.level1, name='level1'),

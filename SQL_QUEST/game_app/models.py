@@ -565,8 +565,10 @@ class Player(models.Model):
 class Level(models.Model):
     title = models.CharField(max_length=255)
 
-
-
+class RetryAttempt(models.Model):
+    level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    retry_count = models.IntegerField(default=0)
 class PuzzleTable(models.Model):
     table_name = models.CharField(max_length=255)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
