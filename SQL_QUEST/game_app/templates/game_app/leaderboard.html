@@ -1,5 +1,4 @@
-<!-- leaderboard.html -->
-{% load static %}
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,11 +25,13 @@
                     <td>{{ forloop.counter }}</td>
                     <td>{{ entry.player__nickname }}</td>
                     <td>{{ entry.total_time }}</td>
-                    <td>{{ entry.levels_passed }}</td>
+                    <td>{{ entry.rounds_passed }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <button id="mainMenuBtn">Main Menu</button>
     </div>
+    <script src="{% static 'game_app/js/leaderboards.js' %}"></script>
 </body>
 </html>

@@ -565,10 +565,13 @@ class Player(models.Model):
 class Level(models.Model):
     title = models.CharField(max_length=255)
 
+
 class RetryAttempt(models.Model):
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     retry_count = models.IntegerField(default=0)
+
+
 class PuzzleTable(models.Model):
     table_name = models.CharField(max_length=255)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
@@ -594,6 +597,22 @@ class Performance(models.Model):
     top_time = models.DurationField()
     medium_time = models.DurationField()
     bad_time = models.DurationField()
+
+
+class HiddenTreasure(models.Model):
+    level_id = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='hidden_treasures')
+    name = models.CharField(max_length=255)
+    experience = models.FloatField()
+
+class Answers(models.Model):
+    level_id = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='answers')
+    answer = models.CharField(max_length=255)
+
+
+class Hints(models.Model):
+    level_id = models.ForeignKey(Level, on_delete=models.CASCADE, related_name='hint')
+    hint = models.CharField(max_length=255)
+
 
 # INSERT INTO game_app_Level (title) VALUES
 # ('DataField'),

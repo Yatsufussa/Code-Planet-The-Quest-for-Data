@@ -8,6 +8,7 @@ urlpatterns = [
     path('register_player/', views.register_player, name='register_player'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
     path('record_level_completion/', views.record_level_completion, name='record_level_completion'),
+    path('increment_player_level/', views.increment_player_level, name='increment_player_level'),
     path('execute_query/', views.execute_query, name='execute_query'),
     path('settings/', views.settings, name='settings'),
     path('about_us/', views.about_us, name='about_us'),

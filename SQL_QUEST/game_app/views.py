@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count,DurationField, IntegerField
+from django.db.models.functions import Coalesce
 from .models import DataField, LakeData, Mountain_Of_Algorithms, Operator_Forest, Cipher_Hills, PetaByte_Bay, Pass, \
     PetaByte_Bay2, Player, Level, ExperiencePoints, Log_Desrt, PlanetDungeons, PlanetDungeons2, ArchivesCity, \
     ArchivesCity2, FinalShowdown, FinalShowdown2, RetryAttempt
 from .models import Optimization_Plateau2, Optimization_Plateau, Index_Valley, Index_Valley2, Lunar_Landscape, \
-    Lunar_Landscape2, QueryFactory, QueryFactory2, APIFields, APIFields2
+    Lunar_Landscape2, QueryFactory, QueryFactory2, APIFields, APIFields2, HiddenTreasure, Answers, Hints
 from .models import SecurityCastle, SecurityCastle2, ProcessingClouds, ProcessingClouds2, DatabaseDepths, \
     DatabaseDepths2, CodeCodeksRidge, CodeCodeksRidge2, DataManagementCenter, DataManagementCenter2
 import json
@@ -37,11 +38,11 @@ def leaderboard(request):
     # Annotate players with the total completion time and count of distinct levels passed
     leaderboard_data = (
         Pass.objects.values('player__nickname')
-        .annotate(total_time=Sum('time'), levels_passed=Count('level', distinct=True))
-        .order_by('total_time')
+        .annotate(total_time=Coalesce(Sum('time'), 0, output_field=DurationField()))  # Coalesce to handle NULL values
+        .annotate(rounds_passed=Count('level', distinct=True, output_field=IntegerField()))
+        .order_by('-rounds_passed', 'total_time')  # Order by rounds_passed descending, total_time ascending
     )
     return render(request, 'game_app/leaderboard.html', {'leaderboard_data': leaderboard_data})
-
 def get_player_id(request):
     if request.method == 'GET':
         player_id = request.session.get('player_id')
@@ -52,7 +53,6 @@ def get_player_id(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
 @csrf_exempt
 def record_level_completion(request):
     if request.method == 'POST':
@@ -61,18 +61,18 @@ def record_level_completion(request):
             player_id = json_data.get('player_id')
             level_id = json_data.get('level_id')
             elapsed_time = json_data.get('elapsed_time')
+            retry_count = json_data.get('retry_count')
 
-            if not player_id or not level_id or not elapsed_time:
+            if not player_id or not level_id or not elapsed_time or retry_count is None:
                 return JsonResponse({'error': 'Missing data'}, status=400)
-            print(f"Received data: player_id={player_id}, level_id={level_id}, elapsed_time={elapsed_time}")
+
+            print(f"Received data: player_id={player_id}, level_id={level_id}, elapsed_time={elapsed_time}, retry_count={retry_count}")
 
             elapsed_time = timedelta(seconds=elapsed_time)
             level = Level.objects.get(id=level_id)
             player = Player.objects.get(id=player_id)
-
             performance = Performance.objects.get(level=level)
 
-            # Determine stars based on performance criteria
             if elapsed_time <= performance.top_time:
                 stars = 3
             elif elapsed_time <= performance.medium_time:
@@ -80,25 +80,16 @@ def record_level_completion(request):
             else:
                 stars = 1
 
-            pass_record = Pass.objects.create(
+            Pass.objects.create(
                 player=player,
                 level=level,
                 time=elapsed_time,
-                stars=stars
+                stars=stars,
+                retry_count=retry_count
             )
 
-            # Base experience points for the level
             base_points = 100
-
-            # Calculate experience points multiplier based on stars
-            if stars == 3:
-                multiplier = 2
-            elif stars == 2:
-                multiplier = 1.5
-            else:
-                multiplier = 1
-
-            # Calculate total experience points
+            multiplier = 2 if stars == 3 else 1.5 if stars == 2 else 1
             total_points = int(base_points * multiplier)
 
             ExperiencePoints.objects.create(
@@ -107,24 +98,23 @@ def record_level_completion(request):
                 points=total_points
             )
 
-            # Calculate total experience points for the player
-            total_experience_points = \
-            ExperiencePoints.objects.filter(player=player).aggregate(total=models.Sum('points'))['total']
-
-            # Determine the player's new level
+            total_experience_points = ExperiencePoints.objects.filter(player=player).aggregate(total=Sum('points'))['total']
             new_level = total_experience_points // 1000
+            print(f"Current player level: {player.p_level}, New level: {new_level}")
 
-            # Update the player's level if it has changed
             if player.p_level != new_level:
                 player.p_level = new_level
                 player.save()
+                print(f"Player level updated to {new_level}")
+            else:
+                print("Player level remains unchanged")
 
             return JsonResponse({'success': True})
         except Exception as e:
+            print(f"Exception: {e}")
             return JsonResponse({'error': str(e)}, status=500)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
-
 
 def home(request):
     return render(request, 'game_app/main_menu.html')
@@ -140,7 +130,32 @@ def about_us(request):
     return render(request, 'game_app/level1.html')
 
 
+@csrf_exempt
+def increment_player_level(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            player_id = data.get('player_id')
 
+            if not player_id:
+                return JsonResponse({'error': 'Player ID is required'}, status=400)
+
+            player = Player.objects.get(id=player_id)
+
+            # Ensure p_level is not None
+            if player.p_level is None:
+                player.p_level = 0
+
+            player.p_level += 1
+            player.save()
+
+            return JsonResponse({'success': True})
+        except Player.DoesNotExist:
+            return JsonResponse({'error': 'Player not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 
 @csrf_exempt

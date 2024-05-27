@@ -1,6 +1,5 @@
-/* leaderboard.css */
 body {
-    background-image: url('/static/game_app/images/leaderboard_background.jpg'); /* Ensure the path is correct */
+    background-image: url('/static/game_app/images/17.png'); /* Ensure the path is correct */
     background-size: cover;
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -50,10 +49,19 @@ tbody tr:nth-child(even) {
 tbody tr:nth-child(odd) {
     background-color: rgba(255, 255, 255, 0.2);
 }
-body {
-    background-image: url('/static/game_app/images/18.png'); /* Ensure the path is correct */
-    background-size: cover;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
+
+button#mainMenuBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 70px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s;
+}
+
+button#mainMenuBtn:hover {
+    background-color: #45a049;
 }

@@ -13,16 +13,16 @@ function getCookie(name) {
     return cookieValue;
 }
 
-// Retrieve the CSRF token
+var retryCount = 0;
 var csrftoken = getCookie('csrftoken');
 var playerId;
 
-// Fetch the player ID when the page loads
 getPlayerId().then(id => {
     playerId = id;
 }).catch(error => {
     console.error('Error fetching player ID:', error);
 });
+
 function getPlayerId() {
     return fetch('/get_player_id/')
         .then(response => response.json())
@@ -34,6 +34,7 @@ function getPlayerId() {
 }
 
 document.getElementById("submit-query").addEventListener("click", function() {
+    retryCount++;
     var sqlQuery = document.getElementById("sql-query").value.trim();
 
     if (sqlQuery.toLowerCase().includes("delete") ||
@@ -52,7 +53,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
     var correctQuery = "SELECT virusname FROM game_app_datafield WHERE virusname='ILOVEYOU';";
     if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
         showAlertSuccess("Congratulations! You passed the level.");
-        var elapsedTime = (new Date().getTime() - startTime) / 1000; // Calculate elapsed time in seconds
+        var elapsedTime = (new Date().getTime() - startTime) / 1000;
         recordLevelCompletion(playerId, elapsedTime);
 
         document.getElementById("submit-query").disabled = true;
@@ -63,6 +64,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
         showAlert("Not correct, try again...");
     }
 });
+
 function recordLevelCompletion(playerId, elapsedTime) {
     fetch('/record_level_completion/', {
         method: 'POST',
@@ -72,8 +74,9 @@ function recordLevelCompletion(playerId, elapsedTime) {
         },
         body: JSON.stringify({
             'player_id': playerId,
-            'level_id': 1,  // Replace with the actual level ID
-            'elapsed_time': elapsedTime  // Pass the elapsed time in seconds
+            'level_id': 1,
+            'elapsed_time': elapsedTime,
+            'retry_count': retryCount
         })
     })
     .then(response => {
@@ -91,81 +94,51 @@ function recordLevelCompletion(playerId, elapsedTime) {
 }
 
 window.onload = function() {
-    startTimer();
+    // Display the hidden treasure after a delay or specific action
+    setTimeout(function() {
+        document.getElementById("hidden-treasure").style.display = "block";
+    }, 5000); // Display after 5 seconds (adjust as needed)
 };
 
-
-
 function addPrefixAfterFrom(sqlQuery, prefix) {
-    // Use regular expression to find "FROM" followed by one or more spaces globally, then add the prefix
     return sqlQuery.replace(/FROM\s+/gi, "FROM " + prefix);
 }
 
-// Rest of the code remains unchanged...
-
-
 function renderTable(sqlQuery) {
-    // Send the SQL query to the server and retrieve the result
     executeQuery(sqlQuery, function(queryResult) {
-        // Render the result in the dynamic table
-        renderDynamicTable(queryResult);
-    });
-}
-
-// Rest of the code remains unchanged...
-
-
-
-
-function renderTable(sqlQuery) {
-    // Send the SQL query to the server and retrieve the result
-    executeQuery(sqlQuery, function(queryResult) {
-        // Render the result in the dynamic table
         renderDynamicTable(queryResult);
     });
 }
 
 function showAlert(message) {
-    // Create alert element
     var alertElement = document.createElement("div");
     alertElement.className = "alert alert-danger";
     alertElement.textContent = message;
-
-    // Append alert element to body
     document.body.appendChild(alertElement);
-
-    // Remove alert after a certain time (e.g., 3 seconds)
     setTimeout(function() {
         document.body.removeChild(alertElement);
-    }, 3000); // Adjust time as needed
+    }, 3000);
 }
 
 function showAlertSuccess(message) {
-    // Create alert element
     var alertElement = document.createElement("div");
     alertElement.className = "alert alert-success";
     alertElement.textContent = message;
-
-    // Append alert element to body
     document.body.appendChild(alertElement);
-
-    // Remove alert after a certain time (e.g., 3 seconds)
     setTimeout(function() {
         document.body.removeChild(alertElement);
-    }, 3000); // Adjust time as needed
+    }, 3000);
 }
-
-
 
 function executeQuery(sqlQuery, callback) {
     console.log("SQL Query:", sqlQuery);
-    var csrftoken = getCookie('csrftoken'); // Function to retrieve CSRF token from cookies
+    var csrftoken = getCookie('csrftoken');
 
     fetch('/execute_query/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken  // Include CSRF token in headers
+            'X-CSRFToken': csrftoken
         },
         body: JSON.stringify({ sqlQuery: sqlQuery })
     })
@@ -183,15 +156,13 @@ function executeQuery(sqlQuery, callback) {
 
 function renderDynamicTable(queryResult) {
     var dynamicTable = document.getElementById("dynamic-table");
-    dynamicTable.innerHTML = ""; // Clear previous content
+    dynamicTable.innerHTML = "";
 
-    // Create the table structure
     var table = document.createElement("table");
     var thead = document.createElement("thead");
     var tbody = document.createElement("tbody");
     var trHead = document.createElement("tr");
 
-    // Add table headers
     Object.keys(queryResult[0]).forEach(function(key) {
         var th = document.createElement("th");
         th.textContent = key;
@@ -200,7 +171,6 @@ function renderDynamicTable(queryResult) {
     thead.appendChild(trHead);
     table.appendChild(thead);
 
-    // Add table rows
     queryResult.forEach(function(rowData) {
         var tr = document.createElement("tr");
         Object.values(rowData).forEach(function(value) {
@@ -211,6 +181,38 @@ function renderDynamicTable(queryResult) {
         tbody.appendChild(tr);
     });
     table.appendChild(tbody);
-
     dynamicTable.appendChild(table);
 }
+
+document.getElementById("hidden-treasure").addEventListener("click", function() {
+    // Disable the button to prevent multiple clicks
+    this.disabled = true;
+
+    fetch('/increment_player_level/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ player_id: playerId })
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Treasure found! Player level increased.");
+            // Hide the button after a successful response
+            this.style.display = "none";
+        } else {
+            response.json().then(data => {
+                alert("Error: " + data.error);
+                // Re-enable the button if there was an error
+                this.disabled = false;
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Re-enable the button if there was an error
+        this.disabled = false;
+    });
+});
+

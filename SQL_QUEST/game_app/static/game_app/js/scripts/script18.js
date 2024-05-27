@@ -12,7 +12,7 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
+var retryCount = 0;
 // Retrieve the CSRF token
 var csrftoken = getCookie('csrftoken');
 var playerId;
@@ -32,7 +32,9 @@ function getPlayerId() {
             return null;
         });
 }
+
 document.getElementById("submit-query").addEventListener("click", function() {
+    retryCount++;
     var sqlQuery = document.getElementById("sql-query").value.trim();
 
     if (sqlQuery.toLowerCase().includes("delete") ||
@@ -49,15 +51,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
     renderTable(sqlQuery);
 
     var correctQuery = "SELECT virusname FROM game_app_datafield WHERE virusname='ILOVEYOU';";
-
-    // Normalize spaces and cases for comparison
-    var normalizedSqlQuery = sqlQuery.replace(/\s+/g, ' ').trim().toLowerCase();
-    var normalizedCorrectQuery = correctQuery.replace(/\s+/g, ' ').trim().toLowerCase();
-
-    console.log("Normalized SQL Query:", normalizedSqlQuery);
-    console.log("Normalized Correct Query:", normalizedCorrectQuery);
-
-    if (normalizedSqlQuery === normalizedCorrectQuery) {
+    if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
         showAlertSuccess("Congratulations! You passed the level.");
         var elapsedTime = (new Date().getTime() - startTime) / 1000; // Calculate elapsed time in seconds
         recordLevelCompletion(playerId, elapsedTime);
@@ -70,7 +64,6 @@ document.getElementById("submit-query").addEventListener("click", function() {
         showAlert("Not correct, try again...");
     }
 });
-
 function recordLevelCompletion(playerId, elapsedTime) {
     fetch('/record_level_completion/', {
         method: 'POST',
@@ -81,14 +74,17 @@ function recordLevelCompletion(playerId, elapsedTime) {
         body: JSON.stringify({
             'player_id': playerId,
             'level_id': 18,  // Replace with the actual level ID
-            'elapsed_time': elapsedTime  // Pass the elapsed time in seconds
+            'elapsed_time': elapsedTime,  // Pass the elapsed time in seconds
+            'retry_count': retryCount
         })
     })
     .then(response => {
         if (response.ok) {
             console.log("Level completion recorded successfully.");
         } else {
-            console.error("Failed to record level completion.");
+            response.json().then(data => {
+                console.error("Failed to record level completion:", data.error);
+            });
         }
     })
     .catch(error => {
@@ -220,6 +216,3 @@ function renderDynamicTable(queryResult) {
 
     dynamicTable.appendChild(table);
 }
-
-
-

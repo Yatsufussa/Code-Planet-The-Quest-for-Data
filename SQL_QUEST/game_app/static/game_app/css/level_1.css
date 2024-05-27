@@ -281,3 +281,19 @@
 .Riddle {
     color: #FF5733;
 }
+
+#hidden-treasure {
+    position: absolute;
+    top: 20px; /* Adjust position as needed */
+    left: 1310px; /* Adjust position as needed */
+    background-color: #85C1E9;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#hidden-treasure:hover {
+    background-color: darkgoldenrod;
+}
