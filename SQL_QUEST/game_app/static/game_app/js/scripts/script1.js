@@ -64,6 +64,32 @@ document.getElementById("submit-query").addEventListener("click", function() {
         showAlert("Not correct, try again...");
     }
 });
+document.getElementById("hint-button").addEventListener("click", function() {
+    fetchHint().then(hint => {
+        var hintContainer = document.getElementById("hint-container");
+        var hintContent = document.getElementById("hint-content");
+        hintContent.textContent = hint;
+        hintContainer.style.display = "block";
+
+        // Hide the hint after 10 seconds (10000 milliseconds)
+        setTimeout(function() {
+            hintContainer.style.display = "none";
+        }, 10000);
+    }).catch(error => {
+        console.error('Error fetching hint:', error);
+        showAlert("Could not fetch hint. Please try again later.");
+    });
+});
+
+function fetchHint() {
+    return fetch('/get_hint/?level_id=1')
+        .then(response => response.json())
+        .then(data => data.hint)
+        .catch(error => {
+            console.error('Error fetching hint:', error);
+            return "No hint available.";
+        });
+}
 
 function recordLevelCompletion(playerId, elapsedTime) {
     fetch('/record_level_completion/', {

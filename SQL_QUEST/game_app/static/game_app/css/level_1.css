@@ -141,7 +141,7 @@
 
 .sql-entry textarea {
     width: 75%; /* Adjust width to account for padding */
-    height: 15px; /* Adjust height as needed */
+    height: 30px; /* Adjust height as needed */
     resize: none;
     border: 1px solid #006400;
     border-radius: 5px;
@@ -296,4 +296,23 @@
 
 #hidden-treasure:hover {
     background-color: darkgoldenrod;
+}
+.hint-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    transform: translateX(-50%); /* Center the button horizontally */
+}
+
+/* Style for the hint container */
+.hint-container {
+    position: fixed; /* Fixed position to stay in the viewport */
+    top: 20px; /* Adjust distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    display: none; /* Initially hidden */
 }

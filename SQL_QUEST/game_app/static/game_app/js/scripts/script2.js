@@ -51,7 +51,8 @@ document.getElementById("submit-query").addEventListener("click", async function
 
     renderTable(sqlQuery);
 
-    var correctQuery = "SELECT virusname FROM game_app_datafield WHERE virusname='ILOVEYOU';";
+    var correctQuery = "SELECT SUM(NumberOfAbsorbedFiles) AS answer FROM game_app_LakeData WHERE LakeDatabase IN ('BeautifulDb', 'PureH2ODB');";
+
     if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
         showAlertSuccess("Congratulations! You passed the level.");
         var elapsedTime = (new Date().getTime() - startTime) / 1000;

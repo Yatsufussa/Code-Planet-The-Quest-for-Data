@@ -13,6 +13,7 @@
     <div class="button-container">
          <button id="back-button" class="custom-button back-button">Back</button>
          <button id="next-button" class="custom-button next-button">Next</button>
+
     </div>
 
     <div class="container">
@@ -68,7 +69,10 @@
     </div>
     <h2 class="ritual-heading">Write Your Dark Ritual</h2>
      <button id="hidden-treasure" style="position:absolute;">S</button>
-
+    <div id="hint-container" class="hint-container" style="display: none;">
+        <p id="hint-content"></p>
+    </div>
+    <button id="hint-button" class="custom-button hint-button">Hint</button>
     <!-- Link to external JavaScript files -->
     <script src="{% static 'game_app/js/dialogues/dialogue1.js' %}"></script>
     <script src="{% static 'game_app/js/scripts/script1.js' %}"></script>

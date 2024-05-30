@@ -279,3 +279,22 @@
     background-size: contain; /* Ensure the image covers the entire div */
     background-repeat: no-repeat;
 }
+.hint-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    transform: translateX(-50%); /* Center the button horizontally */
+}
+
+/* Style for the hint container */
+.hint-container {
+    position: fixed; /* Fixed position to stay in the viewport */
+    top: 20px; /* Adjust distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    display: none; /* Initially hidden */
+}

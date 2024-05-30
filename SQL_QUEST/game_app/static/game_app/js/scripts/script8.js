@@ -50,7 +50,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
 
     renderTable(sqlQuery);
 
-    var correctQuery = "SELECT virusname FROM game_app_datafield WHERE virusname='ILOVEYOU';";
+    var correctQuery = "SELECT CONCAT(LEFT(MainFile, 1), 'Tree') AS BTree FROM Index_Valley WHERE IndexType = 'eerTB';";
     if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
         showAlertSuccess("Congratulations! You passed the level.");
         var elapsedTime = (new Date().getTime() - startTime) / 1000; // Calculate elapsed time in seconds
@@ -64,6 +64,32 @@ document.getElementById("submit-query").addEventListener("click", function() {
         showAlert("Not correct, try again...");
     }
 });
+document.getElementById("hint-button").addEventListener("click", function() {
+    fetchHint().then(hint => {
+        var hintContainer = document.getElementById("hint-container");
+        var hintContent = document.getElementById("hint-content");
+        hintContent.textContent = hint;
+        hintContainer.style.display = "block";
+
+        // Hide the hint after 10 seconds (10000 milliseconds)
+        setTimeout(function() {
+            hintContainer.style.display = "none";
+        }, 10000);
+    }).catch(error => {
+        console.error('Error fetching hint:', error);
+        showAlert("Could not fetch hint. Please try again later.");
+    });
+});
+
+function fetchHint() {
+    return fetch('/get_hint/?level_id=8')
+        .then(response => response.json())
+        .then(data => data.hint)
+        .catch(error => {
+            console.error('Error fetching hint:', error);
+            return "No hint available.";
+        });
+}
 function recordLevelCompletion(playerId, elapsedTime) {
     fetch('/record_level_completion/', {
         method: 'POST',

@@ -50,7 +50,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
 
     renderTable(sqlQuery);
 
-    var correctQuery = "SELECT virusname FROM game_app_datafield WHERE virusname='ILOVEYOU';";
+    var correctQuery = "select * from game_app_Petabyte_bay where tableID = 1;";
     if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
         showAlertSuccess("Congratulations! You passed the level.");
         var elapsedTime = (new Date().getTime() - startTime) / 1000; // Calculate elapsed time in seconds

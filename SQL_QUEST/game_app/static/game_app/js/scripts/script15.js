@@ -50,7 +50,7 @@ document.getElementById("submit-query").addEventListener("click", function() {
 
     renderTable(sqlQuery);
 
-    var correctQuery = "SELECT virusname FROM game_app_datafield WHERE virusname='ILOVEYOU';";
+    var correctQuery = "SELECT CONCAT(CHAR((SELECT ASIISafe FROM SecurityCastle WHERE PartOfLock = 'Requestroom')),CHAR((SELECT ASIISafe FROM SecurityCastle WHERE PartOfLock = 'Kitchen')),CHAR((SELECT ASIISafe FROM SecurityCastle WHERE PartOfLock = 'Library')),CHAR((SELECT ASIISafe FROM SecurityCastle WHERE PartOfLock = 'Bathroom')),CHAR((SELECT ASIISafe FROM SecurityCastle WHERE PartOfLock = 'Livingroom'))) AS result_word;";
     if (sqlQuery.toLowerCase() === correctQuery.toLowerCase()) {
         showAlertSuccess("Congratulations! You passed the level.");
         var elapsedTime = (new Date().getTime() - startTime) / 1000;

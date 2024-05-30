@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.db.models import Sum, Count,DurationField, IntegerField
+from django.db.models import Sum, Count, DurationField, IntegerField
 from django.db.models.functions import Coalesce
 from .models import DataField, LakeData, Mountain_Of_Algorithms, Operator_Forest, Cipher_Hills, PetaByte_Bay, Pass, \
     PetaByte_Bay2, Player, Level, ExperiencePoints, Log_Desrt, PlanetDungeons, PlanetDungeons2, ArchivesCity, \
@@ -43,6 +43,8 @@ def leaderboard(request):
         .order_by('-rounds_passed', 'total_time')  # Order by rounds_passed descending, total_time ascending
     )
     return render(request, 'game_app/leaderboard.html', {'leaderboard_data': leaderboard_data})
+
+
 def get_player_id(request):
     if request.method == 'GET':
         player_id = request.session.get('player_id')
@@ -52,6 +54,16 @@ def get_player_id(request):
             return JsonResponse({'error': 'Player ID not found'}, status=404)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+def get_hint(request):
+    level_id = request.GET.get('level_id')
+    try:
+        hint = Hints.objects.get(level_id=level_id).hint
+        return JsonResponse({'hint': hint})
+    except Hints.DoesNotExist:
+        return JsonResponse({'hint': 'No hint available for this level.'}, status=404)
+
 
 @csrf_exempt
 def record_level_completion(request):
@@ -66,7 +78,8 @@ def record_level_completion(request):
             if not player_id or not level_id or not elapsed_time or retry_count is None:
                 return JsonResponse({'error': 'Missing data'}, status=400)
 
-            print(f"Received data: player_id={player_id}, level_id={level_id}, elapsed_time={elapsed_time}, retry_count={retry_count}")
+            print(
+                f"Received data: player_id={player_id}, level_id={level_id}, elapsed_time={elapsed_time}, retry_count={retry_count}")
 
             elapsed_time = timedelta(seconds=elapsed_time)
             level = Level.objects.get(id=level_id)
@@ -98,7 +111,8 @@ def record_level_completion(request):
                 points=total_points
             )
 
-            total_experience_points = ExperiencePoints.objects.filter(player=player).aggregate(total=Sum('points'))['total']
+            total_experience_points = ExperiencePoints.objects.filter(player=player).aggregate(total=Sum('points'))[
+                'total']
             new_level = total_experience_points // 1000
             print(f"Current player level: {player.p_level}, New level: {new_level}")
 
@@ -115,6 +129,7 @@ def record_level_completion(request):
             return JsonResponse({'error': str(e)}, status=500)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
+
 
 def home(request):
     return render(request, 'game_app/main_menu.html')

@@ -4,6 +4,7 @@ from django.urls import path
 urlpatterns = [
     path('', views.register_player, name='register_player'),  # URL pattern for player registration
     path('main_menu/', views.home, name='main_menu'),
+    path('get_hint/', views.get_hint, name='get_hint'),
     path('get_player_id/', views.get_player_id, name='get_player_id'),
     path('register_player/', views.register_player, name='register_player'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
